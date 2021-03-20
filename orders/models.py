@@ -14,7 +14,7 @@ class Order:
         self.rating=rating
         self.feedback=feedback
 
-    def insert():
+    def insert(self):
         cursor = connection.cursor()
         query = """INSERT INTO orders
                     (order_time, order_status, order_type, customer_id,
@@ -33,7 +33,7 @@ class Order:
         cursor.execute(query)
         # self.order_id =  #GET ORDER ID HERE FROM QUERY SOMEHOW
 
-    def update():
+    def update(self):
         cursor = connection.cursor()
         query = """UPDATE TABLE orders SET
                     order_time='{0}',
@@ -60,6 +60,7 @@ class Order:
                 )
         cursor.execute(query)
 
+    @staticmethod
     def find(oid):
         cursor = connection.cursor()
         query = """SELECT order_id, order_time, order_status, order_type, customer_id,
@@ -77,6 +78,7 @@ class Order:
             orders.append(o)
         return orders[0]
 
+    @staticmethod
     def find_all():
         cursor = connection.cursor()
         query = """SELECT order_id, order_time, order_status, order_type, customer_id,
