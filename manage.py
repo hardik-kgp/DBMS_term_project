@@ -2,6 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from django.db import connection
 
 
 def main():
@@ -16,6 +17,18 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
+def setup_database():
+    cursor = connection.cursor()
+    #create table queries
+    orders_query = """CREATE TABLE IF NOT EXISTS orders(
+                        order_id INT(),
+                        order
+                    )"""
+
+    #execute all crete queries
+    cursor.execute(orders_query)
+
 
 if __name__ == '__main__':
+    setup_database()
     main()
