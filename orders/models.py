@@ -19,7 +19,7 @@ class Order:
         query = """INSERT INTO orders
                     (order_time, order_status, order_type, customer_id,
                     address_id, payment_method, total_bill, rating, feedback)
-                    VALUES ('{0}','{1}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')""".format(
+                    VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')""".format(
                         self.order_time,
                         self.order_status,
                         self.order_type,
@@ -94,6 +94,7 @@ class Order:
             orders.append(o)
         return orders
 
+    @staticmethod
     def delete(oid):
         cursor = connection.cursor()
         query = """DELETE FROM orders WHERE order_id='{0}'""".format(
