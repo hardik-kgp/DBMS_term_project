@@ -1,2 +1,6 @@
 .env
 mysql.conf
+users/__pycache__
+resauto/__pycache__
+orders/__pycache__
+foods/__pycache__
