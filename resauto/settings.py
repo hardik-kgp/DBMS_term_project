@@ -25,7 +25,7 @@ SECRET_KEY = '7iyvt)(ztth9cii#6-bo(e7b%=s3b$@ee0qt!h$b48bcfe@n#-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -85,10 +85,12 @@ WSGI_APPLICATION = 'resauto.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': '../mysql.conf',
-        },
-    }
+        'NAME': 'project',                  
+        'USER': 'djangouser',             
+        'PASSWORD': 'abc',                  
+        'HOST': '127.0.0.1',                     
+        'PORT': '3306', 
+        }
 }
 
 
