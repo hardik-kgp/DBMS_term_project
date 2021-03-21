@@ -25,9 +25,11 @@ SECRET_KEY = '7iyvt)(ztth9cii#6-bo(e7b%=s3b$@ee0qt!h$b48bcfe@n#-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
+CRISPY_TEMPLATE_PACK =  'bootstrap4'
 
+LOGIN_REDIRECT_URL =  '/'
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     'foods',
     'orders',
     'users',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [

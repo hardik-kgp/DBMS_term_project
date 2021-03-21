@@ -18,7 +18,12 @@ class Employee():
 						self.salary,
 					)
 		cursor.execute(query)
-		# self.employee_id =  #GET ORDER ID HERE FROM QUERY SOMEHOW
+
+		query = """SELECT LAST_INSERT_ID();"""
+		cursor.execute(query)
+		rows = cursor.fetchall()
+		for row in rows:
+			self.employee_id = row[0]
 
 	def update(self):
 		cursor = connection.cursor()
@@ -78,25 +83,29 @@ class Employee():
 
 
 class Customer():
-	def __init__(self, name, email, phone, rescoins):
-		# self.customer_id=customer_id
+	def __init__(self, name, email, phone, res_coins):
+		self.customer_id=-1
 		self.name=name
 		self.email=email
 		self.phone=phone
-		self.rescoins=rescoins
+		self.res_coins=res_coins
 
 	def insert(self):
 		cursor = connection.cursor()
 		query = """INSERT INTO Customer
-					(name, email, phone, rescoins)
+					(name, email, phone, res_coins)
 					VALUES ('{0}','{1}','{2}','{3}')""".format(
 						self.name,
 						self.email,
 						self.phone,
-						self.rescoins
+						self.res_coins
 					)
 		cursor.execute(query)
-		# self.customer_id =  #GET ORDER ID HERE FROM QUERY SOMEHOW
+		query = """SELECT LAST_INSERT_ID();"""
+		cursor.execute(query)
+		rows = cursor.fetchall()
+		for row in rows:
+			self.customer_id = row[0]
 
 	def update(self):
 		cursor = connection.cursor()
@@ -104,13 +113,13 @@ class Customer():
 					name='{0}',
 					email='{1}',
 					phone='{2}',
-					rescoins='{3}'
+					res_coins='{3}'
 					WHERE customer_id={4};
 				""".format(
 					self.name,
 					self.email,
 					self.phone,
-					self.rescoins,
+					self.res_coins,
 					self.customer_id
 				)
 		cursor.execute(query)
@@ -118,34 +127,34 @@ class Customer():
 	@staticmethod
 	def find(cid):
 		cursor = connection.cursor()
-		query = """SELECT customer_id, name, email, phone, rescoins
+		query = """SELECT customer_id, name, email, phone, res_coins
 					FROM Customer WHERE customer_id='{0}'
 				""".format(
 					cid
 				)
 		cursor.execute(query)
 		rows = cursor.fetchall()
-		Customer = []
+		customer = []
 		for row in rows:
-			o = Order(row[1],row[2],row[3],row[4])
+			o = Customer(row[1],row[2],row[3],row[4])
 			o.customer_id = row[0]
-			Customer.append(o)
-		return Customer[0]
+			customer.append(o)
+		return customer[0]
 
 	@staticmethod
 	def find_all():
 		cursor = connection.cursor()
-		query = """SELECT customer_id, name, email, phone, rescoins
+		query = """SELECT customer_id, name, email, phone, res_coins
 				   FROM Customer
 				"""
 		cursor.execute(query)
 		rows = cursor.fetchall()
-		Customer = []
+		customer = []
 		for row in rows:
-			o = Order(row[1],row[2],row[3],row[4])
+			o = Customer(row[1],row[2],row[3],row[4])
 			o.customer_id = row[0]
-			Customer.append(o)
-		return Customer
+			customer.append(o)
+		return customer
 
 	@staticmethod
 	def delete(cid):
@@ -154,4 +163,5 @@ class Customer():
 			cid
 		)
 		cursor.execute(query)
+
 
