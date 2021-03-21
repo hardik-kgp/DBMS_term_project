@@ -1,12 +1,14 @@
 from django.db import connection
-
+from django.db import models
+from django.contrib.auth.models import User
 # Create your models here.
-class Employee():
+class Employee(models.Model):
 	def __init__(self, name, position, salary):
 		self.employee_id=-1
 		self.name=name
 		self.position=position
 		self.salary=salary
+		self.user = models.OneToOneField(User,on_delete=models.CASCADE)
 
 	def insert(self):
 		cursor = connection.cursor()
@@ -82,13 +84,14 @@ class Employee():
 	
 
 
-class Customer():
+class Customer(models.Model):
 	def __init__(self, name, email, phone, res_coins):
 		self.customer_id=-1
 		self.name=name
 		self.email=email
 		self.phone=phone
 		self.res_coins=res_coins
+		self.user = models.OneToOneField(User,on_delete=models.CASCADE)
 
 	def insert(self):
 		cursor = connection.cursor()
@@ -165,3 +168,10 @@ class Customer():
 		cursor.execute(query)
 
 
+
+class Profile(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    
+
+    def __str__(self):
+        return self.user.username

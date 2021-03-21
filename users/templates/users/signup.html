@@ -1,0 +1,14 @@
+{%extends "base_layout.html"%}
+{%block content%}
+<h1>Sign up for :</h1>
+    <div class="choices">
+        <div class="choice-1">
+            <a href="{% url 'accounts:signup_employee'%}" class="link-button">EMPLOYEE</a>
+        </div>
+        <br><br>
+        <div class="choice-2">
+            <a href="{% url 'accounts:signup_customer'%}" class="link-button">CUSTOMER</a>
+        </div>
+    </div>
+
+{%endblock content%}

@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views import generic
 from django.db import connection
 from django.http import HttpResponseRedirect
@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 import datetime
 from .models import Customer
 from .forms import UserRegisterForm
+
 def home(request):
 	return render(request, 'resauto/home.html')
 
@@ -22,7 +23,7 @@ def view_profile_customer(request):
 	return render(request, 'users/view_profile_customer.html')
 
 def verifycustomerlogin(request):
-	print(request.POST['username'], request.POST['password'])
+	
 	with connection.cursor() as cursor:
 		cursor.execute('SELECT * FROM Customer WHERE customer_id = %s and password = %s;', [request.POST['username'],request.POST['password']])        
 		row = cursor.fetchall()
@@ -39,9 +40,9 @@ def verifycustomerlogin(request):
 		return render(request, 'users/customer_login.html', {'data':"Enter correct details"})
 
 def customer_signup(request):
-	# if not request.user.is_authenticated:
-	#     return render(request, 'users/adminlogin.html', {'data':"Login again"})
-	return render(request, 'users/customer_signup.html')
+	customer = Customer(request.POST['name'],request.POST['email'],request.POST['phone'],0)
+	customer.insert()
+	return redirect('/customer_login')
 
 
 def employeesignup(request):
