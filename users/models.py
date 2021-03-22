@@ -171,7 +171,7 @@ class Customer(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    
+    customer_id = models.IntegerField()
 
     def __str__(self):
         return self.user.username

@@ -9,6 +9,8 @@ from django.contrib.auth import authenticate, login, logout
 import datetime
 from .models import Customer
 from .forms import UserRegisterForm
+from django.contrib import messages
+from .models import Profile
 
 def home(request):
 	return render(request, 'resauto/home.html')
@@ -40,9 +42,43 @@ def verifycustomerlogin(request):
 		return render(request, 'users/customer_login.html', {'data':"Enter correct details"})
 
 def customer_signup(request):
-	customer = Customer(request.POST['name'],request.POST['email'],request.POST['phone'],0)
-	customer.insert()
-	return redirect('/customer_login')
+	if request.method == 'POST':
+
+		print("post request")
+		
+		print("username: ", request.POST['username'], "password: ", request.POST['password1'], "email: ", request.POST['email'])
+		user_form = UserRegisterForm(request.POST)
+		
+		print(user_form)
+
+		if user_form.is_valid():
+			cur_user = user_form.save()
+			customer = Customer(request.POST['name'],request.POST['email'],request.POST['phone'],0)
+			customer.insert()
+
+			profile = Profile()
+			profile.user = cur_user
+			profile.customer_id = customer.customer_id
+
+			profile.save()
+
+			login(request, cur_user)
+
+			print("Customer created successfully")
+
+			messages.success(request, f'Your Account Has been Created')
+			return redirect('foods:menu')
+		else:
+			print("Enter Valid Details")
+			messages.error(request, f'Please Enter Valid details')
+			return render(request,'users/customer_signup.html')
+
+	else:
+		return render(request, 'users/customer_signup.html')
+
+
+def employee_signup(request):
+	return render(request, 'users/employee_signup.html')
 
 
 def employeesignup(request):
@@ -115,3 +151,7 @@ def adminverify(request):
 		return render(request, 'resauto/admin.html')
 	else:
 		return render(request, 'resauto/home.html', {'data':"Enter correct credentials"})
+
+
+def signup(request):
+	return render(request, 'users/signup.html')
