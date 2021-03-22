@@ -11,6 +11,7 @@ from .models import Customer
 from .forms import UserRegisterForm
 from django.contrib import messages
 from .models import Profile
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 
 def home(request):
 	return render(request, 'resauto/home.html')
@@ -25,21 +26,18 @@ def view_profile_customer(request):
 	return render(request, 'users/view_profile_customer.html')
 
 def verifycustomerlogin(request):
-	
-	with connection.cursor() as cursor:
-		cursor.execute('SELECT * FROM Customer WHERE customer_id = %s and password = %s;', [request.POST['username'],request.POST['password']])        
-		row = cursor.fetchall()
-	row1 = [y for x in row for y in x]
-	print(row1)
-	if(len(row1)>=1):
-		user_form = UserRegisterForm(request.POST)
-		user = user_form.save()
-		# user = authenticate(username=request.POST['username'], password=request.POST['password'])
-		customer = Customer.find(int(request.POST['username']))
-		login(request, user)
-		return render(request, 'foods/menu.html', {'customer',customer})
+	if request.method == 'POST':
+		form = AuthenticationForm(data=request.POST)
+		if form.is_valid():
+			user = form.get_user()
+			login(request,user)
+			if 'next' in request.POST:
+				return redirect(request.POST.get('next'))
+			else:
+				return redirect('foods/menu.html')
 	else:
-		return render(request, 'users/customer_login.html', {'data':"Enter correct details"})
+		form = AuthenticationForm()
+	return render(request,'users/customer_login.html')
 
 def customer_signup(request):
 	if request.method == 'POST':
