@@ -1,0 +1,9 @@
+drop table food_combos;
+drop table order_employee;
+drop table order_items;
+drop table orders;
+drop table customer_address;
+drop table food_item;
+drop table Employee;
+drop table Resources;
+drop table Customer;
