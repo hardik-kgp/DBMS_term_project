@@ -21,7 +21,7 @@ class food_item():
         self.filter_for_db()
         query = """INSERT INTO food_item
                     (name, type, price, is_veg, availability, is_combo)
-                    VALUES ('{0}','{1}','{2}',{3},{4},{5})""".format(
+                    VALUES ('{0}','{1}','{2}',b'{3}',b'{4}',b'{5}')""".format(
                         self.name,
                         self.type,
                         self.price,
@@ -48,10 +48,10 @@ class food_item():
                     name='{0}',
                     type='{1}',
                     price='{2}',
-                    is_veg={3},
-                    availability={4},
-                    is_combo={5},
-                    WHERE food_id={6};
+                    is_veg=b'{3}',
+                    availability=b'{4}',
+                    is_combo=b'{5}',
+                    WHERE food_id='{6}';
                 """.format(
                     self.name,
                     self.type,
