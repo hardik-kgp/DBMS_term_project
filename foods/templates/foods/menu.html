@@ -21,9 +21,9 @@
     {% for item in grp %}
         <h5>&emsp;{{item.name}}</h5>
         <h6>
-            &emsp;&emsp;price: {{item.price}},
-            &ensp;available: {% if item.availability == True %} Yes {% else %} No {% endif %},
-            &ensp;veg: {% if item.is_veg == True %} Yes {% else %} No {% endif %}
+            &emsp;&emsp;price: {{item.price}}
+            &ensp;available: {% if item.availability %} Yes {% else %} No {% endif %},
+            &ensp;veg: {% if item.is_veg %} Yes {% else %} No {% endif %}
         </h6>
     {%endfor%}
 {% endfor %}

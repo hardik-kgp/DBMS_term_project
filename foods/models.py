@@ -7,9 +7,9 @@ class food_item():
         self.name=name
         self.type=item_type
         self.price=price
-        self.is_veg=is_veg
-        self.availability=availability
-        self.is_combo=is_combo
+        self.is_veg=bool(is_veg)
+        self.availability=bool(availability)
+        self.is_combo=bool(is_combo)
 
     def filter_for_db(self):
         self.is_veg = 1 if self.is_veg else 0

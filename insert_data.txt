@@ -14,7 +14,7 @@ INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`,
 -- combo addition
 
 INSERT INTO `project`.`food_combos` (`combo_food_id`, `food_id`, `quantity`) VALUES ('8', '2', '1');
-INSERT INTO `project`.`food_combos` (`combo_food_id`, `food_id`, `quantity`) VALUES ('8', '5', '1');
+INSERT INTO `project`.`food_combos` (`combo_food_id`, `food_id`, `quantity`) VALUES ('8', '5', '2');
 
 
 -- Customer addition
