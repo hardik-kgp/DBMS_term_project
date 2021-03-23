@@ -11,11 +11,17 @@ class food_item():
         self.availability=availability
         self.is_combo=is_combo
 
+    def filter_for_db(self):
+        self.is_veg = 1 if self.is_veg else 0
+        self.availability = 1 if self.availability else 0
+        self.is_combo = 1 if self.is_combo else 0
+
     def insert(self):
         cursor = connection.cursor()
+        self.filter_for_db()
         query = """INSERT INTO food_item
                     (name, type, price, is_veg, availability, is_combo)
-                    VALUES ('{0}','{1}','{2}','{3}','{4}','{5}')""".format(
+                    VALUES ('{0}','{1}','{2}',{3},{4},{5})""".format(
                         self.name,
                         self.type,
                         self.price,
@@ -37,13 +43,14 @@ class food_item():
 
     def update(self):
         cursor = connection.cursor()
+        self.filter_for_db()
         query = """UPDATE TABLE food_item SET
                     name='{0}',
                     type='{1}',
                     price='{2}',
-                    is_veg='{3}',
-                    availability='{4}',
-                    is_combo='{5}',
+                    is_veg={3},
+                    availability={4},
+                    is_combo={5},
                     WHERE food_id={6};
                 """.format(
                     self.name,
