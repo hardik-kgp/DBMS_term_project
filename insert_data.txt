@@ -13,3 +13,22 @@ INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`,
 
 INSERT INTO `project`.`food_combos` (`combo_food_id`, `food_id`, `quantity`) VALUES ('8', '2', '1');
 INSERT INTO `project`.`food_combos` (`combo_food_id`, `food_id`, `quantity`) VALUES ('8', '5', '1');
+
+
+-- Customer addition
+
+INSERT INTO Customer (name, email, phone, res_coins) VALUES ('jack', 'jack@gmail.com','1234567890', '0');
+INSERT INTO Customer (name, email, phone, res_coins) VALUES ('john', 'john@gmail.com','2345678901', '0');
+INSERT INTO Customer (name, email, phone, res_coins) VALUES ('alice', 'alice@gmail.com','3456789012', '0');
+INSERT INTO Customer (name, email, phone, res_coins) VALUES ('bob', 'bob@gmail.com','4567890123', '0');
+INSERT INTO Customer (name, email, phone, res_coins) VALUES ('jerry', 'jerry@gmail.com','5678901234', '0');
+INSERT INTO Customer (name, email, phone, res_coins) VALUES ('chris', 'chris@gmail.com','6789012345', '0');
+
+-- Employee addition 
+
+insert into Employee (name, position, salary) values ('salman', 'manager','0');
+insert into Employee (name, position, salary) values ('abdul', 'waiter','0');
+insert into Employee (name, position, salary) values ('younus', 'waiter','0');
+insert into Employee (name, position, salary) values ('Shahbaz', 'chef','0');
+insert into Employee (name, position, salary) values ('Amir', 'chef','0');
+insert into Employee (name, position, salary) values ('Razzaq', 'security','0');

@@ -1,6 +1,0 @@
-insert into Customer (name, email, phone, res_coins) values ('cust1', 'cust1@gmail.com','1234567890', '0');
-insert into Customer (name, email, phone, res_coins) values ('cust2', 'cust2@gmail.com','2345678901', '0');
-insert into Customer (name, email, phone, res_coins) values ('cust3', 'cust3@gmail.com','3456789012', '0');
-insert into Customer (name, email, phone, res_coins) values ('cust4', 'cust4@gmail.com','4567890123', '0');
-insert into Customer (name, email, phone, res_coins) values ('cust5', 'cust5@gmail.com','5678901234', '0');
-insert into Customer (name, email, phone, res_coins) values ('cust6', 'cust6@gmail.com','6789012345', '0');
