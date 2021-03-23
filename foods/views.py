@@ -20,7 +20,8 @@ def checkout(request):
 def addfood(request):
 
     if(request.method == 'POST'):
-        print((request.POST['q']))
+        nf = food_item(request.POST['name'],request.POST['item_type'],request.POST['price'],bool(request.POST['is_veg']),bool(request.POST['avail']),bool(request.POST['is_combo']))
+        nf.insert()
         return render(request, 'foods/checkout.html')
     else:
         return render(request, 'foods/error.html')

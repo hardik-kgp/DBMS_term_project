@@ -38,7 +38,7 @@ def setup_database():
                     type VARCHAR(40),
                     price INTEGER NOT NULL,
                     is_veg BIT NOT NULL,
-                    availability INTEGER NOT NULL,
+                    availability BIT NOT NULL,
                     is_combo BIT NOT NULL,
                     PRIMARY KEY (food_id)
                 );"""
