@@ -1,5 +1,9 @@
+{% extends "header.html" %}
+{% block content %}
 <h1>MENU</h1>
 
 {% for a in non_combos %}
     <h2> name : {{a.name}} </h2>
 {% endfor %}
+
+{% endblock content %}

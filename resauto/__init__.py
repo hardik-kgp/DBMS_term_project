@@ -28,7 +28,7 @@ def setup_database():
                     name VARCHAR(60),
                     position VARCHAR(60),
                     salary INTEGER,
-                    CHECK (position = "GUARD" or "MANAGER" or "WAITER" or "OWNER"),
+                    CHECK (position = "GUARD" or position = "MANAGER" or position = "WAITER" or position = "OWNER"),
                     PRIMARY KEY (employee_id)
 				);"""
 
@@ -64,8 +64,8 @@ def setup_database():
                         feedback VARCHAR(200),
                         FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
                         FOREIGN KEY (address_id) REFERENCES customer_address(address_id),
-                        CHECK (order_type = "DINE-IN" or "HOME-DELIVERY" or "PICK-UP"),
-                        CHECK (payment_method = "CASH" or "CARD" or "ONLINE"),
+                        CHECK (order_type in ("DINE-IN","HOME-DELIVERY","PICK-UP")),
+                        CHECK (payment_method in ("CASH","CARD","ONLINE")),
                         PRIMARY KEY (order_id)
 					);"""
 

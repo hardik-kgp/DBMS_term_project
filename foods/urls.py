@@ -5,5 +5,6 @@ app_name = 'foods'
 
 urlpatterns = [
     path('menu',views.menu,name="menu"),
-    path('checkout',views.menu,name="checkout"),
+    path('checkout',views.checkout,name="checkout"),
+    path('addfood',views.addfood,name="addfood"),
 ]
