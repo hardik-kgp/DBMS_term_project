@@ -1,0 +1,25 @@
+<h1>customer_signup</h1>
+
+
+<form action="{% url 'users:customer_signup' %}" method="post">
+{% csrf_token %}
+<h3 align = "center">Enter Details</h3>
+username:
+<input required type="text" name="username" value="" />
+<br>password:
+<input required type="password" name="password1" value="" />
+<br>
+Confirm password:
+<input required type="password" name="password2" value="" />
+<br>
+Name: 
+<input required type="text" name="name" value="" />
+<br>
+Email id: 
+<input required type="text" name="email" value="" />
+<br>
+Phone No : 
+<input required type="text" name="phone" value="" />
+<br>
+<input type="submit" value="Create Account" />
+</form>

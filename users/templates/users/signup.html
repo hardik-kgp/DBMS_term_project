@@ -1,0 +1,14 @@
+{%extends "header.html"%}
+{%block content%}
+<h1>Sign up for :</h1>
+    <div class="choices">
+        <div class="choice-1">
+            <a href="{% url 'users:customer_signup'%}" class="link-button">CUSTOMER</a>
+        </div>
+        <br><br>
+        <div class="choice-2">
+            <a href="{% url 'users:employee_signup'%}" class="link-button">EMPLOYEE</a>
+        </div>
+    </div>
+
+{%endblock content%}
