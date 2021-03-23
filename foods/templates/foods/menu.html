@@ -1,9 +1,31 @@
 {% extends "header.html" %}
 {% block content %}
 <h1>MENU</h1>
+<b><h2>Combos </h2></b>
+{% for combo in combos %}
+    <h5>&emsp;{{combo.head.name}}</h5>
+        <h6>
+            &emsp;&emsp;price: {{combo.head.price}},
+            &ensp;available: {% if combo.head.availability == True %} Yes {% else %} No {% endif %},
+            &ensp;veg: {% if combo.head.is_veg == True %} Yes {% else %} No {% endif %}
+        </h6>
+        <h6>&emsp;&emsp;items:&ensp;
+            {% for item,qty in combo.children %}
+                {{item.name}} - {{qty}} &ensp;
+            {%endfor%}
+        </h6>
+{% endfor %}
 
-{% for a in non_combos %}
-    <h2> name : {{a.name}} </h2>
+{% for key,grp in non_combos.items %}
+    <b><h2>{{key}} </h2></b>
+    {% for item in grp %}
+        <h5>&emsp;{{item.name}}</h5>
+        <h6>
+            &emsp;&emsp;price: {{item.price}},
+            &ensp;available: {% if item.availability == True %} Yes {% else %} No {% endif %},
+            &ensp;veg: {% if item.is_veg == True %} Yes {% else %} No {% endif %}
+        </h6>
+    {%endfor%}
 {% endfor %}
 
 {% endblock content %}

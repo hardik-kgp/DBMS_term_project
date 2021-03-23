@@ -128,6 +128,25 @@ class food_item():
         return food_items
 
     @staticmethod
+    def find_combo_internals(fcid):
+        cursor = connection.cursor()
+        query = """SELECT fi.food_id, fi.name, fi.type, fi.price, fi.is_veg, fi.availability, fi.is_combo, fc.quantity
+                   FROM food_item fi, food_combos fc
+                   WHERE fc.combo_food_id = '{0}' AND fc.food_id = fi.food_id
+                """.format(
+                    fcid
+                )
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        food_items = []
+        for row in rows:
+            o = food_item(row[1],row[2],row[3],row[4], row[5], row[6])
+            o.food_id = row[0]
+            qty = row[7]
+            food_items.append((o,qty))
+        return food_items
+
+    @staticmethod
     def delete(food_id):
         cursor = connection.cursor()
         query = """DELETE FROM food_item WHERE food_id='{0}'""".format(
