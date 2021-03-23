@@ -28,7 +28,7 @@ def setup_database():
                     name VARCHAR(60),
                     position VARCHAR(60),
                     salary INTEGER,
-                    CHECK (position = "GUARD" or position = "MANAGER" or position = "WAITER" or position = "OWNER"),
+                    CHECK (position = "security" or position = "manager" or position = "waiter" or position = "owner" or position = "chef"),
                     PRIMARY KEY (employee_id)
 				);"""
 

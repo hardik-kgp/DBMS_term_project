@@ -2,12 +2,14 @@
 
 INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('1', 'onion pizza', 'pizza', '90', b'1', b'1', b'0');
 INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('2', 'cheese pizza', 'pizza', '150', b'1', b'1', b'0');
-INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('3', 'white pasta', 'pasta', '70', b'1', b'1', b'0');
-INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('4', 'red pizza', 'pasta', '60', b'1', b'1', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('3', 'white pasta', 'pasta', '70', b'1', b'0', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('4', 'red pizza', 'pasta', '60', b'1', b'0', b'0');
 INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('5', 'Coke', 'cold_drink', '40', b'1', b'1', b'0');
 INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('6', 'veg Burger', 'burger', '70', b'1', b'1', b'0');
 INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('7', 'cheese Burger', 'burger', '100', b'1', b'1', b'0');
 INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('8', 'Combo1', 'combo', '170', b'1', b'1', b'1');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('9', 'chicken pizza', 'pizza', '60', b'0', b'0', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('10', 'butter chicken pizza', 'pizza', '60', b'0', b'0', b'0');
 
 -- combo addition
 
