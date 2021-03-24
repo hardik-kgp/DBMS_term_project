@@ -10,8 +10,9 @@ def menu(request):
 
     non_combos = food_item.find_all_non_combos()
     combos = food_item.find_all_combos()
+    # print(non_combos[-2].is_veg)
 
-    foods = [(item, item.type) for item in non_combos]
+    foods = sorted([(item, item.type) for item in non_combos],key=lambda x: x[1])
     foods = {i:[j[0] for j in grp] for i,grp in itertools.groupby(foods, lambda x:x[1])}
 
     combos_list = []
@@ -20,7 +21,7 @@ def menu(request):
         temp['head'] = combo
         temp['children'] = food_item.find_combo_internals(combo.food_id)
         combos_list.append(temp)
-
+    # print(foods['Pizza'][2].is_veg)
     return render(request, 'foods/menu.html',{'non_combos':foods, 'combos':combos_list})
 
 def checkout(request):

@@ -1,5 +1,7 @@
 from django.db import connection
 
+to_bool = lambda x:x==b'\x01'
+to_int = lambda x: 1 if x else 0
 # Create your models here.
 class food_item():
     def __init__(self, name, item_type, price, is_veg, availability, is_combo):
@@ -11,23 +13,17 @@ class food_item():
         self.availability=bool(availability)
         self.is_combo=bool(is_combo)
 
-    def filter_for_db(self):
-        self.is_veg = 1 if self.is_veg else 0
-        self.availability = 1 if self.availability else 0
-        self.is_combo = 1 if self.is_combo else 0
-
     def insert(self):
         cursor = connection.cursor()
-        self.filter_for_db()
         query = """INSERT INTO food_item
                     (name, type, price, is_veg, availability, is_combo)
                     VALUES ('{0}','{1}','{2}',b'{3}',b'{4}',b'{5}')""".format(
                         self.name,
                         self.type,
                         self.price,
-                        self.is_veg,
-                        self.availability,
-                        self.is_combo
+                        to_int(self.is_veg),
+                        to_int(self.availability),
+                        to_int(self.is_combo)
                     )
         cursor.execute(query)
 
@@ -56,9 +52,9 @@ class food_item():
                     self.name,
                     self.type,
                     self.price,
-                    self.is_veg,
-                    self.availability,
-                    self.is_combo,
+                    to_int(self.is_veg),
+                    to_int(self.availability),
+                    to_int(self.is_combo),
                     self.food_id
                 )
         cursor.execute(query)
@@ -75,7 +71,7 @@ class food_item():
         rows = cursor.fetchall()
         food_items = []
         for row in rows:
-            o = food_item(row[1],row[2],row[3],row[4], row[5], row[6])
+            o = food_item(row[1],row[2],row[3],to_bool(row[4]), to_bool(row[5]), to_bool(row[6]))
             o.food_id = row[0]
             food_items.append(o)
         return food_items[0]
@@ -90,7 +86,7 @@ class food_item():
         rows = cursor.fetchall()
         food_items = []
         for row in rows:
-            o = food_item(row[1],row[2],row[3],row[4], row[5], row[6])
+            o = food_item(row[1],row[2],row[3],to_bool(row[4]), to_bool(row[5]), to_bool(row[6]))
             o.food_id = row[0]
             food_items.append(o)
         return food_items
@@ -106,7 +102,7 @@ class food_item():
         rows = cursor.fetchall()
         food_items = []
         for row in rows:
-            o = food_item(row[1],row[2],row[3],row[4], row[5], row[6])
+            o = food_item(row[1],row[2],row[3],to_bool(row[4]), to_bool(row[5]), to_bool(row[6]))
             o.food_id = row[0]
             food_items.append(o)
         return food_items
@@ -122,7 +118,7 @@ class food_item():
         rows = cursor.fetchall()
         food_items = []
         for row in rows:
-            o = food_item(row[1],row[2],row[3],row[4], row[5], row[6])
+            o = food_item(row[1],row[2],row[3],to_bool(row[4]), to_bool(row[5]), to_bool(row[6]))
             o.food_id = row[0]
             food_items.append(o)
         return food_items
@@ -140,7 +136,7 @@ class food_item():
         rows = cursor.fetchall()
         food_items = []
         for row in rows:
-            o = food_item(row[1],row[2],row[3],row[4], row[5], row[6])
+            o = food_item(row[1],row[2],row[3],to_bool(row[4]), to_bool(row[5]), to_bool(row[6]))
             o.food_id = row[0]
             qty = row[7]
             food_items.append((o,qty))

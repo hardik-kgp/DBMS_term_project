@@ -1,5 +1,6 @@
 from django.db import connection
 
+# DATETIME MIGHT CAUSE PROBLEMS! BEWARE!!
 # Create your models here.
 class Order:
     def __init__(self, order_time, order_status, order_type, customer_id, address_id, payment_method, total_bill, rating, feedback):
