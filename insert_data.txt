@@ -28,9 +28,9 @@ INSERT INTO Customer (name, email, phone, res_coins) VALUES ('chris', 'chris@gma
 
 -- Employee addition 
 
-insert into Employee (name, position, salary) values ('salman', 'manager','0');
-insert into Employee (name, position, salary) values ('abdul', 'waiter','0');
-insert into Employee (name, position, salary) values ('younus', 'waiter','0');
-insert into Employee (name, position, salary) values ('Shahbaz', 'chef','0');
-insert into Employee (name, position, salary) values ('Amir', 'chef','0');
-insert into Employee (name, position, salary) values ('Razzaq', 'security','0');
+insert into Employee (name, position, salary) values ('salman', 'manager','150000');
+insert into Employee (name, position, salary) values ('abdul', 'waiter','10000');
+insert into Employee (name, position, salary) values ('younus', 'waiter','10000');
+insert into Employee (name, position, salary) values ('Shahbaz', 'chef','25000');
+insert into Employee (name, position, salary) values ('Amir', 'chef','300000');
+insert into Employee (name, position, salary) values ('Razzaq', 'security','8000');
