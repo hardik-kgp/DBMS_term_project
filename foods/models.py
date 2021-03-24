@@ -149,3 +149,20 @@ class food_item():
             food_id
         )
         cursor.execute(query)
+        
+
+    @staticmethod
+    
+    # TODO find the trending food names
+    def find_max_occuring_food_today():
+        pass
+    
+    def find_max_occuring_food_this_month():
+        pass
+    
+    def find_max_occuring_food_this_year():
+        pass
+    
+    
+        
+        

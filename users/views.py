@@ -66,7 +66,7 @@ def customer_signup(request):
 
 		if user_form.is_valid():
 			cur_user = user_form.save()
-			customer = Customer(request.POST['name'],request.POST['email'],request.POST['phone'],0)
+			customer = Customer(request.POST['name'],request.POST['email'],request.POST['phone'],0, 20000)
 			customer.insert()
 
 			profile = Profile()
