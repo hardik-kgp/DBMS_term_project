@@ -1,0 +1,28 @@
+{% extends "header.html" %}
+{% block content %}
+
+{% load static %}
+
+<!DOCTYPE html>
+
+<h1>Details: </h1>
+{% if data %}
+<h3 align="center">{{data}}<h3>
+{% endif %}
+
+<form action="{% url 'users:edit_details_employee' %}" method="post">
+{% csrf_token %}
+Name
+<input required type="text" name="name" value="{{employee.name}}" />
+<br>
+<br>Position
+<input required type="text" name="position" value="{{employee.position}}" disabled />
+<br>
+<br>Phone
+<input required type="text" name="phone" value="{{employee.phone}}" disabled/>
+<br>
+
+<input type="submit" value="Update" />
+</form>
+
+{% endblock content %}

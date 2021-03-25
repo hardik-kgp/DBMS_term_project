@@ -1,4 +1,6 @@
-<h1>customer_signup</h1>
+{% extends "header.html" %}
+{% block content %}
+<h1>Employee_signup</h1>
 
 
 <form action="{% url 'users:employee_signup' %}" method="post">
@@ -23,3 +25,5 @@ Salary:
 <br>
 <input type="submit" value="Create Account" />
 </form>
+
+{% endblock content %}

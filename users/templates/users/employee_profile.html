@@ -1,0 +1,19 @@
+{%extends "header.html" %}
+{%load crispy_forms_tags %}
+{%block content%}
+<div class="content-section">
+  <div class="media">
+    <img class="rounded-circle account-img" src="" width = "118" height = "118">
+    <div class="media-body">
+      <h2 class="account-heading">{{ employee.name }}</h2>
+      <p class="text-secondary">{{employee.position}}</p>
+      <p class="text-secondary">Salary. : {{employee.salary}}</p>
+    </div>
+  </div>
+
+      <a class="Address-book" href="/users/view_ratings">View Ratings</a>
+      <a class="detail-edit" href="/users/edit_details">Edit Details</a>
+
+
+</div>
+{% endblock content%}

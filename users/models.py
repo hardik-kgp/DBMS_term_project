@@ -28,6 +28,8 @@ class Employee(models.Model):
 		rows = cursor.fetchall()
 		for row in rows:
 			self.employee_id = row[0]
+   
+		print("My employee is entered into the table and is ready to rock!")
 
 	def update(self):
 		cursor = connection.cursor()
@@ -54,12 +56,13 @@ class Employee(models.Model):
 		)
 		cursor.execute(query)
 		rows = cursor.fetchall()
-		Employee = []
+		employee = []
 		for row in rows:
+			# print("len of row is: ", len(row))
 			o = Employee(row[1], row[2], row[3])
 			o.employee_id = row[0]
-			Employee.append(o)
-		return Employee[0]
+			employee.append(o)
+		return employee[0]
 
 	@staticmethod
 	def find_all():
@@ -69,12 +72,13 @@ class Employee(models.Model):
 				"""
 		cursor.execute(query)
 		rows = cursor.fetchall()
-		Employee = []
+		employee = []
 		for row in rows:
+			# print("len of row is: ", len(row))
 			o = Employee(row[1], row[2], row[3])
 			o.employee_id = row[0]
-			Employee.append(o)
-		return Employee
+			employee.append(o)
+		return employee
 
 	@staticmethod
 	def delete(eid):
@@ -192,9 +196,11 @@ class Customer(models.Model):
 		cursor.execute(query)
 
 
+
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	customer_id = models.IntegerField()
 
 	def __str__(self):
 		return self.user.username
+

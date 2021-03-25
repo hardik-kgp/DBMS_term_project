@@ -13,7 +13,9 @@ urlpatterns = [
     path('loginresultemployee', views.verifyemployeelogin, name='verifyemployeelogin'),
     path('signup',views.signup, name = 'signup'),
     path('profile',views.profile, name = 'profile'),
+    path('employee_profile',views.employee_profile, name = 'employee_profile'),
     path('add_balance', views.add_balance, name="add_balance"),
     path('edit_details', views.edit_details, name="edit_details"),
     path('address_book', views.address_book, name="address_book"),
+    path('dashboard', views.dashboard, name="dashboard"),    
 ]
