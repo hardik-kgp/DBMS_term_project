@@ -171,6 +171,25 @@ class Customer(models.Model):
 				cid
 		)
 		cursor.execute(query)
+	
+	@staticmethod
+	def get_addresses(cid):
+		cursor = connection.cursor()
+		query = """ SELECT address FROM customer_address WHERE customer_id='{0}'""".format(cid)
+		cursor.execute(query)
+		rows = cursor.fetchall()
+
+		addresses = []
+		for row in rows:
+			addresses.append(row[0])
+
+		return addresses
+
+	@staticmethod
+	def add_address(cid, address):
+		cursor = connection.cursor()
+		query = """INSERT INTO customer_address (customer_id, address) VALUES ('{0}','{1}');""".format(cid, address)
+		cursor.execute(query)
 
 
 class Profile(models.Model):

@@ -15,4 +15,5 @@ urlpatterns = [
     path('profile',views.profile, name = 'profile'),
     path('add_balance', views.add_balance, name="add_balance"),
     path('edit_details', views.edit_details, name="edit_details"),
+    path('address_book', views.address_book, name="address_book"),
 ]
