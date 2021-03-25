@@ -10,6 +10,7 @@ def setup_database():
                     email VARCHAR(60),
                     phone char(10),
                     res_coins INTEGER NOT NULL,
+                    balance INTEGER NOT NULL,
                     CHECK (LENGTH(phone) = 10),
                     PRIMARY KEY (customer_id)
 				);"""

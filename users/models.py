@@ -115,11 +115,11 @@ class Customer(models.Model):
 
 	def update(self):
 		cursor = connection.cursor()
-		query = """UPDATE TABLE Customer SET
+		query = """UPDATE Customer SET
 					name='{0}',
 					email='{1}',
 					phone='{2}',
-					res_coins='{3}'
+					res_coins='{3}',
 					balance = '{5}'
 					WHERE customer_id={4};
 				""".format(
@@ -144,7 +144,7 @@ class Customer(models.Model):
 		rows = cursor.fetchall()
 		customer = []
 		for row in rows:
-			o = Customer(row[1], row[2], row[3], row[4])
+			o = Customer(row[1], row[2], row[3], row[4], row[5])
 			o.customer_id = row[0]
 			customer.append(o)
 		return customer[0]

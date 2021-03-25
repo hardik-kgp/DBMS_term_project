@@ -1,0 +1,22 @@
+{%extends "header.html" %}
+{%load crispy_forms_tags %}
+{%block content%}
+<div class="content-section">
+  <div class="media">
+    <img class="rounded-circle account-img" src="" width = "118" height = "118">
+    <div class="media-body">
+      <h2 class="account-heading">{{ customer.name }}</h2>
+      <p class="text-secondary">{{customer.email}}</p>
+      <p class="text-secondary">Phone no. : {{customer.phone}}</p>
+      <p class="text-secondary">Available Balance : Rs {{customer.balance}}</p>
+      <p class="text-secondary">Coins : {{customer.res_coins}}</p>
+    </div>
+  </div>
+
+      <a class="Add-balance-edit" href="/users/add_balance">Add balance</a>
+      <a class="Address-book" href="/">Address Book</a>
+      <a class="detail-edit" href="/">Edit Details</a>
+
+
+</div>
+{% endblock content%}

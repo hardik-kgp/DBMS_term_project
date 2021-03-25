@@ -12,6 +12,7 @@ from .forms import UserRegisterForm
 from django.contrib import messages
 from .models import Profile
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 def home(request):
 	return render(request, 'resauto/home.html')
@@ -200,3 +201,33 @@ def employee_signup(request):
 
 def signup(request):
 	return render(request, 'users/signup.html')
+
+@login_required(login_url="/users/customer_login")
+def profile(request):
+	customer_id = request.user.profile.customer_id
+	
+	print("customer id: ",customer_id)
+	cus = Customer.find(customer_id)
+
+	return render(request, 'users/customer_profile.html', {'customer':cus})
+
+@login_required(login_url="/users/customer_login")
+def add_balance(request):
+
+	if 'Amount' in request.GET:
+		amount = request.GET['Amount']
+		
+		cus = Customer.find(request.user.profile.customer_id)
+		cus.balance = cus.balance+int(amount)
+		cus.update()
+		messages.success(request, 'Amount {0} has been added successfully'.format(int(amount)))
+		return redirect('users:profile') 
+
+	# get current balance
+	cursor = connection.cursor()
+	cursor.execute("""SELECT balance FROM Customer WHERE customer_id = {0} """.format(request.user.profile.customer_id))
+
+	row = cursor.fetchall()
+	row = row[0][0]
+
+	return render(request, "users/add_balance.html", {'balance': row})

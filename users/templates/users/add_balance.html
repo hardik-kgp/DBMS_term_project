@@ -1,0 +1,10 @@
+{% extends "header.html" %}
+{% block content %}
+
+<h2> Current balance : Rs {{ balance }} </h2>
+
+<form class="form-inline my-2 my-lg-3">
+    <input class="form-control mr-sm-2" type="search" placeholder="Amount" aria-label="amount" name="Amount">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Proceed</button>
+</form>
+{% endblock content %}
