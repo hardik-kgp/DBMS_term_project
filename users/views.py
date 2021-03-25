@@ -34,7 +34,7 @@ def verifycustomerlogin(request):
 			if 'next' in request.POST:
 				return redirect(request.POST.get('next'))
 			else:
-				return redirect('foods/menu.html')
+				return redirect('foods:menu')
 	else:
 		form = AuthenticationForm()
 	return render(request,'users/customer_login.html')
