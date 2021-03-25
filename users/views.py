@@ -231,3 +231,19 @@ def add_balance(request):
 	row = row[0][0]
 
 	return render(request, "users/add_balance.html", {'balance': row})
+
+
+@login_required(login_url="/users/customer_login")
+def edit_details(request):
+	if request.method == 'POST':
+		cus = Customer.find(request.user.profile.customer_id)
+		cus.name = request.POST['name']
+		cus.email = request.POST['email']
+		cus.phone = request.POST['phone']
+		cus.update()
+		messages.success(request, 'Details Updated Sucessfully')
+		return redirect('users:profile')
+
+	cus = Customer.find(request.user.profile.customer_id)
+
+	return render(request, "users/edit_details.html",{'customer':cus})
