@@ -1,31 +1,179 @@
 {% extends "header.html" %}
 {% block content %}
-<h1>MENU</h1>
-<b><h2>Combos </h2></b>
-{% for combo in combos %}
-    <h5>&emsp;{{combo.head.name}}</h5>
-        <h6>
-            &emsp;&emsp;price: {{combo.head.price}},
-            &ensp;available: {% if combo.head.availability == True %} Yes {% else %} No {% endif %},
-            &ensp;veg: {% if combo.head.is_veg == True %} Yes {% else %} No {% endif %}
-        </h6>
-        <h6>&emsp;&emsp;items:&ensp;
-            {% for item,qty in combo.children %}
-                {{item.name}} - {{qty}} &ensp;
-            {%endfor%}
-        </h6>
-{% endfor %}
+<div class="">
+    <b><h1>MENU</h1></b>
+    <hr></hr>
+    <div class="row">
+        <div class="col-3">
+            <h4>Combos</h4>
+            {% for key,grp in non_combos.items %}
+                <h4>{{key}}</h4>
+            {% endfor %}
+        </div>
+        <div class="col-9 left">
+            <h3>Combos </h3>
+            {% for combo in combos %}
+                <div class="row">
+                    <div class="col-1 col-md-1 col-lg-1 col-sm-1">
+                        {% if combo.head.is_veg == True %}
+                            <img src="https://img.icons8.com/color/20/000000/vegetarian-food-symbol.png"/>
+                        {% else %}
+                            <img src="https://img.icons8.com/color/20/000000/non-vegetarian-food-symbol.png"/>
+                        {% endif %}
+                    </div>
+                    <div class="col-9 col-md-9 col-lg-9 col-sm-9">
+                        <h5>&emsp; {% for item,qty in combo.children %}{{qty}} {{item.name}}&ensp;{%endfor%} </h5>
+                            <p>
+                                &emsp;&emsp;₹{{combo.head.price}}
+                            </p>
+                    </div>
+                    <div class="col-2 col-md-2 col-lg-2 col-sm-2">
+                        {% if combo.head.availability == True %}
+                            <div class="counter" id= {{combo.head.food_id }} cost={{combo.head.price}}>
+                                <div class="nz">
+                                    <span class="minus"><img src="https://img.icons8.com/pastel-glyph/22/000000/minus--v2.png"/></span>
+                                    <span class="count bg-light">0</span>
+                                    <span class="plus"><img src="https://img.icons8.com/pastel-glyph/22/000000/plus--v2.png"/></span>
+                                </div>
+                                <div class="z">
+                                    <span class="add">Add <svg xmlns="http://www.w3.org/2000/svg" fill="black" width="16" height="16" viewBox="0 0 20 20" aria-labelledby="icon-svg-title- icon-svg-desc-" role="img" class="rbbb40-0 hoSSCx"><title>plus</title><path d="M15.5 9.42h-4.5v-4.5c0-0.56-0.44-1-1-1s-1 0.44-1 1v4.5h-4.5c-0.56 0-1 0.44-1 1s0.44 1 1 1h4.5v4.5c0 0.54 0.44 1 1 1s1-0.46 1-1v-4.5h4.5c0.56 0 1-0.46 1-1s-0.44-1-1-1z"></path></svg></span>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="counter-disabled text-muted">
+                                <div class="z">
+                                    <span class="add bg-light">Add <svg xmlns="http://www.w3.org/2000/svg" fill="gray" width="14" height="16" viewBox="0 0 20 20" aria-labelledby="icon-svg-title- icon-svg-desc-" role="img" class="rbbb40-0 hoSSCx"><title>plus</title><path d="M15.5 9.42h-4.5v-4.5c0-0.56-0.44-1-1-1s-1 0.44-1 1v4.5h-4.5c-0.56 0-1 0.44-1 1s0.44 1 1 1h4.5v4.5c0 0.54 0.44 1 1 1s1-0.46 1-1v-4.5h4.5c0.56 0 1-0.46 1-1s-0.44-1-1-1z"></path></svg></span>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
 
-{% for key,grp in non_combos.items %}
-    <b><h2>{{key}} </h2></b>
-    {% for item in grp %}
-        <h5>&emsp;{{item.name}}</h5>
-        <h6>
-            &emsp;&emsp;price: {{item.price}}
-            &ensp;available: {% if item.availability %} Yes {% else %} No {% endif %},
-            &ensp;veg: {% if item.is_veg == True %} Yes {% else %} No {% endif %}
-        </h6>
-    {%endfor%}
-{% endfor %}
+            {% for key,grp in non_combos.items %}
+                <h3>{{key}} </h3>
+                {% for item in grp %}
+                    <div class="row">
+                        <div class="col-1 col-md-1 col-lg-1 col-sm-1">
+                            {% if item.is_veg == True %}
+                                <img src="https://img.icons8.com/color/20/000000/vegetarian-food-symbol.png"/>
+                            {% else %}
+                                <img src="https://img.icons8.com/color/20/000000/non-vegetarian-food-symbol.png"/>
+                            {% endif %}
+                        </div>
+                        <div class="col-9 col-md-9 col-lg-9 col-sm-9">
+                            <h5>&emsp; {{item.name}} </h5>
+                                <p>
+                                    &emsp;&emsp;₹{{item.price}}
+                                </p>
+                        </div>
+                        <div class="col-2 col-md-2 col-lg-2 col-sm-2">
+                            {% if item.availability == True %}
+                                <div class="counter" id= {{item.food_id }} cost={{item.price}}>
+                                    <div class="nz">
+                                        <span class="minus" id={{item.food_id}}><img src="https://img.icons8.com/pastel-glyph/22/000000/minus--v2.png"/></span>
+                                        <span class="count bg-light">0</span>
+                                        <span class="plus" id={{item.food_id}}><img src="https://img.icons8.com/pastel-glyph/22/000000/plus--v2.png"/></span>
+                                    </div>
+                                    <div class="z">
+                                        <span class="add">Add <svg xmlns="http://www.w3.org/2000/svg" fill="black" width="16" height="16" viewBox="0 0 20 20" aria-labelledby="icon-svg-title- icon-svg-desc-" role="img" class="rbbb40-0 hoSSCx"><title>plus</title><path d="M15.5 9.42h-4.5v-4.5c0-0.56-0.44-1-1-1s-1 0.44-1 1v4.5h-4.5c-0.56 0-1 0.44-1 1s0.44 1 1 1h4.5v4.5c0 0.54 0.44 1 1 1s1-0.46 1-1v-4.5h4.5c0.56 0 1-0.46 1-1s-0.44-1-1-1z"></path></svg></span>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="counter-disabled text-muted">
+                                    <div class="z" id={{item.food_id}}>
+                                        <span class="add bg-light">Add <svg xmlns="http://www.w3.org/2000/svg" fill="gray" width="14" height="16" viewBox="0 0 20 20" aria-labelledby="icon-svg-title- icon-svg-desc-" role="img" class="rbbb40-0 hoSSCx"><title>plus</title><path d="M15.5 9.42h-4.5v-4.5c0-0.56-0.44-1-1-1s-1 0.44-1 1v4.5h-4.5c-0.56 0-1 0.44-1 1s0.44 1 1 1h4.5v4.5c0 0.54 0.44 1 1 1s1-0.46 1-1v-4.5h4.5c0.56 0 1-0.46 1-1s-0.44-1-1-1z"></path></svg></span>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {%endfor%}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row bg-dark text-white" id="bill" style="position:fixed;bottom:1em;right:20em;padding:1em;width:70em;">
+        <div class="col-10">
+            <h4 class="text-white">Total Bill: <span id="total_bill"></span></h4>
+        </div>
+        <div class="col-1">
+            <button class="btn btn-danger" id="checkout">Checkout</button>
+        </div>
+    </div>
+</div>
 
+<script type="text/javascript">
+var all_counters = document.querySelectorAll(".counter");
+var all_values = {};
+var all_prices = {};
+for(var counter of all_counters){
+    //console.log(counter)
+    all_values[counter.id] = 0;
+    all_prices[counter.id] = counter.attributes.cost.value;
+    counter.querySelector(".nz").style.display = "none";
+    document.getElementById("bill").style.display = "none";
+}
+
+function handleBill(){
+    var b = 0;
+    for(var key in all_values){
+        b += all_values[key]*all_prices[key];
+    }
+    if(b !== 0){
+        document.getElementById("bill").style.display = "";
+        document.getElementById("total_bill").innerHTML = b;
+    }
+    if(b === 0){
+        document.getElementById("bill").style.display = "none";
+        document.getElementById("total_bill").innerHTML = "0";
+    }
+}
+
+for(var counter of all_counters){
+    counter.querySelector('.z').addEventListener("click", (elem) => {
+        var target_counter = elem.target.parentElement.parentElement
+        var counter_id = target_counter.id;
+        all_values[counter_id]++;
+        console.log(target_counter)
+        target_counter.querySelector('.z').style.display = "none";
+        target_counter.querySelector('.nz').style.display = "";
+        target_counter.querySelector('.nz').querySelector('.count').innerHTML = all_values[counter_id];
+        handleBill();
+    });
+    counter.querySelector('.nz').querySelector('.plus').addEventListener("click", (elem) => {
+        var target_counter = elem.target.parentElement.parentElement.parentElement
+        var counter_id = target_counter.id;
+        all_values[counter_id]++;
+        console.log(target_counter)
+        target_counter.querySelector('.z').style.display = "none";
+        target_counter.querySelector('.nz').style.display = "";
+        target_counter.querySelector('.nz').querySelector('.count').innerHTML = all_values[counter_id];
+        handleBill();
+    });
+    counter.querySelector('.nz').querySelector('.minus').addEventListener("click", (elem) => {
+        var target_counter = elem.target.parentElement.parentElement.parentElement
+        var counter_id = target_counter.id;
+        all_values[counter_id]--;
+        console.log(target_counter)
+        if(all_values[counter_id] == 0){
+            target_counter.querySelector('.z').style.display = "";
+            target_counter.querySelector('.nz').style.display = "none";
+        }
+        target_counter.querySelector('.nz').querySelector('.count').innerHTML = all_values[counter_id];
+        handleBill();
+    });
+}
+
+document.getElementById("checkout").addEventListener("click",() => {
+    $.ajax({
+        type:"POST",
+        url:"/foods/menu",
+        data:JSON.stringify(all_values),
+        success:() => {
+            console.log("success!");
+        },
+        dataType:"application/json"
+    })
+});
+</script>
 {% endblock content %}

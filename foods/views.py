@@ -5,8 +5,11 @@ from django.views.decorators.csrf import csrf_exempt
 import itertools
 
 # Create your views here.
+@csrf_exempt
 def menu(request):
     # send menu to front-end
+    if request.method == 'POST': #send to checkout page from here
+        print(request.POST)
 
     non_combos = food_item.find_all_non_combos()
     combos = food_item.find_all_combos()

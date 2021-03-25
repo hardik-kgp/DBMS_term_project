@@ -1,8 +1,9 @@
 body {
-    background: #fafafa;
-    color: #333333;
+    /* background: #fafafa; */
+    /* color: #333333; */
     margin-top: 5rem;
-  }
+    font-family: 'Raleway', sans-serif;
+}
   ::-moz-placeholder {
     opacity: 1;
   }
@@ -159,4 +160,10 @@ a.approve-button:hover{
   color: white;
 }
 
+.counter {
+  font-size: 20px;
+}
 
+.counter-disabled {
+  font-size: 20px;
+}
