@@ -99,7 +99,7 @@ def setup_database():
 				);"""
 
     #execute all 9 create queries
-    # cursor.execute(open('drop_tables.txt').read()) #ONLY FOR DEVLOPMENT
+    cursor.execute(open('drop_tables.txt').read()) #ONLY FOR DEVLOPMENT
     cursor.execute(customers)
     cursor.execute(resources)
     cursor.execute(employee)
@@ -109,7 +109,7 @@ def setup_database():
     cursor.execute(order_items)
     cursor.execute(order_employee)
     cursor.execute(food_combos)
-    # cursor.execute(open('insert_data.txt').read()) #ONLY FOR DEVELOPMENT
+    cursor.execute(open('insert_data.txt').read()) #ONLY FOR DEVELOPMENT
 
 
 setup_database()
