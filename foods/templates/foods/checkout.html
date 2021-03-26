@@ -41,7 +41,7 @@
                 <input type="radio" class="btn-check" name="method" id="option1" value="delivery" autocomplete="off">
                 <label for="option1"><h5 style="display:inline;">&emsp;Delivery</h5></label>
 
-                <input type="radio" class="btn-check" name="method" id="option2" value="dinein" autocomplete="off" style="margin-left:50px;" checked>
+                <input type="radio" class="btn-check" name="method" id="option2" value="pickup" autocomplete="off" style="margin-left:50px;" checked>
                 <label for="option2"><h5 style="display:inline;">&emsp;Pick Up</h5></label>
             </form>
         </div>
@@ -116,7 +116,7 @@ delivery.addEventListener("change", () => {
     }
 });
 
-$.ajax({
+{% comment %} $.ajax({
     type:"GET",
     url:"/foods/get_cart",
     complete: (res) => {
@@ -140,6 +140,24 @@ $.ajax({
             });
         });
     }
-})
+}); {% endcomment %}
+
+document.getElementById("confirm").addEventListener("click", () => {
+    $.ajax({
+        type:"POST",
+        url:"/foods/create_order",
+        data: {
+            delivery_method: delivery.method.value,
+            delivery_address: addr.addr.value,
+            // delivery_address_id: addr.addr.value,
+            payment_method: payment.method.value
+        },
+        dataType: "application/json",
+        complete: (res) => {
+            console.log(res);
+        }
+    });
+});
+
 </script>
 {% endblock content %}
