@@ -3,7 +3,7 @@
 INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('1', 'Onion pizza', 'Pizza', '90', b'1', b'1', b'0');
 INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('2', 'Cheese pizza', 'Pizza', '150', b'1', b'1', b'0');
 INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('3', 'White pasta', 'Pasta', '70', b'1', b'0', b'0');
-INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('4', 'Red pizza', 'Pasta', '60', b'1', b'0', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('4', 'Red pasta', 'Pasta', '60', b'1', b'0', b'0');
 INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('5', 'Coke', 'Cold Drinks', '40', b'1', b'1', b'0');
 INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('6', 'Veg Burger', 'Burgers', '70', b'1', b'1', b'0');
 INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('7', 'Cheese Burger', 'Burgers', '100', b'1', b'1', b'0');
@@ -11,10 +11,33 @@ INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`,
 INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('9', 'Chicken pizza', 'Pizza', '60', b'0', b'0', b'0');
 INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('10', 'Butter chicken pizza', 'Pizza', '60', b'0', b'0', b'0');
 
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('11', 'Delux pizza', 'Pizza', '90', b'0', b'1', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('12', 'Capsicum pizza', 'Pizza', '150', b'1', b'1', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('13', 'Mexican pasta', 'Pasta', '100', b'1', b'0', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('14', 'Italian pasta', 'Pasta', '120', b'1', b'1', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('15', 'Fanta', 'Cold Drinks', '40', b'1', b'1', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('16', 'Paneer Burger', 'Burgers', '70', b'1', b'1', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('17', 'Chicken Burger', 'Burgers', '100', b'1', b'0', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('18', 'Super duper ultra pro max combo', 'combos', '3000', b'1', b'1', b'1');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('19', 'Indian Sharbat', 'Cold Drinks', '60', b'1', b'1', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('20', 'Virgin Mojito', 'Cold Drinks', '160', b'1', b'1', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('21', 'Combo3', 'combos', '400', b'0', b'0', b'1');
+
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('22', 'Badam Shake', 'Shake', '80', b'1', b'1', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('23', 'Pan Shake', 'Shake', '70', b'1', b'0', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('24', 'Chocolate Shake', 'Shake', '60', b'1', b'1', b'0');
+INSERT INTO `project`.`food_item` (`food_id`, `name`, `type`, `price`, `is_veg`, `availability`, `is_combo`) VALUES ('25', 'Kitkat Shake', 'Shake', '90', b'1', b'1', b'0');
 -- combo addition
 
 INSERT INTO `project`.`food_combos` (`combo_food_id`, `food_id`, `quantity`) VALUES ('8', '2', '1');
 INSERT INTO `project`.`food_combos` (`combo_food_id`, `food_id`, `quantity`) VALUES ('8', '5', '2');
+INSERT INTO `project`.`food_combos` (`combo_food_id`, `food_id`, `quantity`) VALUES ('18', '11', '1');
+INSERT INTO `project`.`food_combos` (`combo_food_id`, `food_id`, `quantity`) VALUES ('18', '14', '2');
+INSERT INTO `project`.`food_combos` (`combo_food_id`, `food_id`, `quantity`) VALUES ('18', '15', '1');
+INSERT INTO `project`.`food_combos` (`combo_food_id`, `food_id`, `quantity`) VALUES ('18', '5', '2');
+INSERT INTO `project`.`food_combos` (`combo_food_id`, `food_id`, `quantity`) VALUES ('21', '16', '1');
+INSERT INTO `project`.`food_combos` (`combo_food_id`, `food_id`, `quantity`) VALUES ('21', '19', '2');
+
 
 
 -- Customer addition
