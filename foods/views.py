@@ -3,6 +3,8 @@ from .models import food_item
 from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
 import itertools
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 @csrf_exempt
@@ -34,6 +36,7 @@ def menu(request):
     # print(foods['Pizza'][2].is_veg)
     return render(request, 'foods/menu.html',{'non_combos':foods, 'combos':combos_list})
 
+@login_required(login_url="/users/customer_login")
 def checkout(request):
     cart = request.session['cart_items']
     cart_items = []

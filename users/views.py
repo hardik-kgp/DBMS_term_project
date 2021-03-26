@@ -28,10 +28,14 @@ def view_profile_customer(request):
 
 def verifycustomerlogin(request):
 	if request.method == 'POST':
-		form = AuthenticationForm(data=request.POST)
+		temp = request.POST.dict()
+		temp['username'] = temp['phone']
+		form = AuthenticationForm(data=temp)
 		if form.is_valid():
 			user = form.get_user()
+			old_cart = request.session['cart_items']
 			login(request,user)
+			request.session['cart_items'] = old_cart
 			if 'next' in request.POST:
 				return redirect(request.POST.get('next'))
 			else:
@@ -43,7 +47,9 @@ def verifycustomerlogin(request):
 
 def verifyemployeelogin(request):
 	if request.method == 'POST':
-		form = AuthenticationForm(data=request.POST)
+		temp = request.POST.dict()
+		temp['username'] = temp['phone']
+		form = AuthenticationForm(data=temp)
 		if form.is_valid():
 			user = form.get_user()
 			login(request,user)
@@ -59,9 +65,11 @@ def customer_signup(request):
 	if request.method == 'POST':
 
 		print("post request")
+		temp = request.POST.dict()
+		temp['username'] = request.POST['phone']
 		
-		print("username: ", request.POST['username'], "password: ", request.POST['password1'], "email: ", request.POST['email'])
-		user_form = UserRegisterForm(request.POST)
+		print("username: ", temp['username'], "password: ", temp['password1'], "email: ", temp['email'])
+		user_form = UserRegisterForm(temp)
 		
 		print(user_form)
 
@@ -76,7 +84,9 @@ def customer_signup(request):
 
 			profile.save()
 
+			old_cart = request.session['cart_items']
 			login(request, cur_user)
+			request.session['cart_items'] = old_cart
 
 			print("Customer created successfully")
 
@@ -96,9 +106,11 @@ def employee_signup(request):
 	if request.method == 'POST':
 
 		print("post request")
+		temp = request.POST.dict()
+		temp['username'] = temp['phone']
 		
 		# print("username: ", request.POST['username'], "password: ", request.POST['password1'], "email: ", request.POST['email'])
-		user_form = UserRegisterForm(request.POST)
+		user_form = UserRegisterForm(temp)
 		
 		print(user_form)
 

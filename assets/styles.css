@@ -171,3 +171,8 @@ a.approve-button:hover{
 .z, .minus, .plus{
   cursor: pointer;
 }
+
+.hoverable:hover {
+    background-color: rgb(241, 240, 240);
+    opacity: 0.9;
+}

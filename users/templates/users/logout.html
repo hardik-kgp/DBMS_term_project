@@ -1,11 +1,19 @@
 {% extends "header.html" %}
 {% block content %}
-    <h2>You have been loged out !</h2>
-    <div class="border-top pt-3">
+<div class="">
+    <h4 align="center" class="text-danger">You have been logged out!<h3>
+    <h5 align="center" class="text-danger">Redirecting to menu...<h5>
+    {% comment %} <div class="border-top pt-3">
         <small class="text-muted">
-          <h3>
-            <a href="{% url 'users:customer_login' %}" class = "btn btn-outline-info">Log In</a>
-          </h3>
+            <h3>
+                <a href="{% url 'users:customer_login' %}" class="btn btn-dark btn-lg">Log In Again</a>
+            </h3>
         </small>
-    </div>
+    </div> {% endcomment %}
+</div>
+<script>
+    setTimeout(() => {
+        window.location = "/";
+    }, 3000);
+</script>
 {% endblock content %}

@@ -1,17 +1,26 @@
 {% extends "header.html" %}
 {% block content %}
-<h1>MY ADDRESSES</h1>
-
-<form class="form-inline my-2 my-lg-3">
-    <input class="form-control mr-sm-2" type="add-address" placeholder="Flat no/house no, area" aria-label="add-address" name="address">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add Address</button>
-</form>
-
-{% for address in addresses %}
-    <h5>&emsp;Address : </h5>
-        <h6>
-            &emsp;&emsp;{{address}},
-        </h6>
-{% endfor %}
+<div class="">
+    <h1>MY ADDRESSES</h1>
+    <hr></hr>
+    <div class="row">
+        <div class="col-4 r-border">
+            <form class="form-inline my-2 my-lg-3">
+                <h4>Add New Address</h4>
+                <div class="">
+                    <textarea class="form-control mr-sm-2" rows="5" cols="20" type="add-address" placeholder="Flat no/house no, area" aria-label="add-address" name="address"></textarea>
+                </div>
+                <button class="btn btn-outline-dark" style="margin-top:20px;" type="submit">Add Address</button>
+            </form>
+        </div>
+        <div class="col-6">
+            {% for address in addresses %}
+                <div class="hoverable" style="margin-top:30px;">
+                    <h4>&emsp;Address {{forloop.counter0}}: </h4>
+                    <h5>&emsp;&emsp;{{address}}</h5>
+                </div>
+            {% endfor %}
+        </div>
+</div>
 
 {% endblock content %}
