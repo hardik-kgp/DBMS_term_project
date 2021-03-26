@@ -1,30 +1,48 @@
 {% extends "header.html" %}
 {% block content %}
 
-<h1>customer_signup</h1>
-
-
-<form action="{% url 'users:customer_signup' %}" method="post">
-{% csrf_token %}
-<h3 align = "center">Enter Details</h3>
-username:
-<input required type="text" name="username" value="" />
-<br>password:
-<input required type="password" name="password1" value="" />
-<br>
-Confirm password:
-<input required type="password" name="password2" value="" />
-<br>
-Name: 
-<input required type="text" name="name" value="" />
-<br>
-Email id: 
-<input required type="text" name="email" value="" />
-<br>
-Phone No : 
-<input required type="text" name="phone" value="" />
-<br>
-<input type="submit" value="Create Account" />
-</form>
+<div class="">
+    <b><h1>SIGNUP</h1></b>
+    <hr></hr>
+    {% if data %}
+        <h6 align="center" class="text-danger">{{data}}<h3>
+    {% endif %}
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-5 form-signin">
+            <form action="{% url 'users:customer_signup' %}" method="post">
+                {% csrf_token %}
+                <div class="form-floating">
+                    <h5 for="floatingInput">Phone Number</h5>
+                    <input class="form-control" name="phone" id="floatingInput" placeholder="7424XXXX02">
+                </div>
+                <br>
+                <div class="form-floating">
+                    <h5 for="floatingPassword">Password</h5>
+                    <input type="password" class="form-control" name="password1" id="floatingPassword" placeholder="*******">
+                </div>
+                <br>
+                <div class="form-floating">
+                    <h5 for="floatingPassword">Confirm Password</h5>
+                    <input type="password" class="form-control" name="password2" id="floatingPassword" placeholder="*******">
+                </div>
+                <br>
+                <div class="form-floating">
+                    <h5 for="floatingInput">Name</h5>
+                    <input class="form-control" name="name" id="floatingInput" placeholder="Your Name">
+                </div>
+                <br>
+                <div class="form-floating">
+                    <h5 for="floatingInput">Email</h5>
+                    <input class="form-control" name="email" id="floatingInput" placeholder="name@example.com">
+                </div>
+                <br>
+                <br><br>
+                <button class="btn btn-dark btn-lg" type="submit">Create Account</button>
+            </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
 
 {% endblock content %}
