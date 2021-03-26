@@ -1,19 +1,26 @@
 {%extends "header.html" %}
 {%load crispy_forms_tags %}
 {%block content%}
-<div class="content-section">
-  <div class="media">
-    <img class="rounded-circle account-img" src="" width = "118" height = "118">
-    <div class="media-body">
-      <h2 class="account-heading">{{ employee.name }}</h2>
-      <p class="text-secondary">{{employee.position}}</p>
-      <p class="text-secondary">Salary. : {{employee.salary}}</p>
+<div class="">
+  <h1>EMPLOYEE&ensp;PROFILE</h1>
+  <hr></hr>
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <div class="content-section">
+        <div class="media">
+          <img class="rounded-circle account-img" src="https://i.etsystatic.com/23010786/r/il/e03d4a/2317371994/il_570xN.2317371994_pr1c.jpg" width = "118" height = "118">
+          <div class="media-body">
+            <h2 class="account-heading">{{ employee.name }}</h2>
+            <h5 class="text-secondary">{{employee.position}}</h5>
+            <h5 class="text-secondary">₹ {{employee.salary}}</h5>
+
+            <a class="Address-book" href="/users/view_ratings">View Ratings</a><br>
+            <a class="detail-edit" href="/users/edit_details_employee">Edit Details</a><br>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-      <a class="Address-book" href="/users/view_ratings">View Ratings</a>
-      <a class="detail-edit" href="/users/edit_details">Edit Details</a>
-
-
 </div>
 {% endblock content%}

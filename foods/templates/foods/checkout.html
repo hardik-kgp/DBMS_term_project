@@ -5,7 +5,7 @@
     <hr></hr>
     <div class="row">
         <div class="col-3"></div>
-        <div class="col-9 left">
+        <div class="col-9">
             {% for item,count in cart %}
                 <div class="row">
                     <div class="col-1 col-md-1 col-lg-1 col-sm-1">
@@ -32,13 +32,114 @@
             {% endfor %}
         </div>
     </div>
+    <hr/>
+    <!--ADDRESS / DINE-IN-->
+    <div class="row" style="margin-top:50px;">
+        <div class="col-4"></div>
+        <div class="col-8">
+            <form name="delivery">
+                <input type="radio" class="btn-check" name="method" id="option1" value="delivery" autocomplete="off">
+                <label for="option1"><h5 style="display:inline;">&emsp;Delivery</h5></label>
+
+                <input type="radio" class="btn-check" name="method" id="option2" value="dinein" autocomplete="off" style="margin-left:50px;" checked>
+                <label for="option2"><h5 style="display:inline;">&emsp;Pick Up</h5></label>
+            </form>
+        </div>
+    </div>
+    <div class="row" id="address_list" style="margin-top:50px;display:none;">
+        <div class="col-4"></div>
+        <div class="col-5">
+            <h4>Your Addresses</h4>
+            <hr/>
+            <form name="addr">
+                {% for address in addresses %}
+                    <div class="hoverable card" style="margin-top:10px;">
+                        <label class="card-body row" for="{{forloop.counter0}}">
+                            <div class="col-1">
+                                <input type="radio" name="addr" id="{{forloop.counter0}}" value="{{address}}" autocomplete="off">
+                            </div>
+                            <div class="col-10">
+                                {% comment %} <label for="{{forloop.counter0}}"> {% endcomment %}
+                                <h6>&emsp;Address {{forloop.counter0}}: </h6>
+                                <h5>&emsp;&emsp;{{address}}</h5>
+                                {% comment %} </label> {% endcomment %}
+                            </div>
+                        </label>
+                    </div>
+                {% endfor %}
+            </form>
+            <a target="_blank" href="/users/address_book" class="hoverable card" style="margin-top:10px;">
+                <div class="card-body row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <h5>Add Address +</h5>
+                    </div>
+                </div>
+            </a>
+            <img class="float-right" style="margin-top:10px;" onclick="window.location.reload()" width="25px" src="data:image/png;base64,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">
+        </div>
+    </div>
+    <div class="row" id="pay" style="margin-top:50px;">
+        <div class="col-4"></div>
+        <div class="col-5">
+            <h4>Payment</h4>
+            <hr/>
+            <form name="payment">
+                <input type="radio" class="btn-check" name="method" id="o1" value="cod" autocomplete="off" checked>
+                <label for="o1"><h5 style="display:inline;">&emsp;Pay On Delivery / Pick-up</h5></label><br>
+
+                <input type="radio" class="btn-check" name="method" id="o2" value="online" autocomplete="off">
+                <label for="o2"><h5 style="display:inline;">&emsp;Online Payment</h5></label>
+
+            </form>
+        </div>
+    </div>
+    <br><br><br><br><br>
     <div class="row bg-dark text-white" id="bill" style="position:fixed;bottom:1em;right:20em;padding:1em;width:70em;">
         <div class="col-10">
-            <h4 class="text-white">Total Bill: ₹{{total_bill}}</h4>
+            <h4 class="text-white">Total Bill : ₹{{total_bill}}</h4>
         </div>
         <div class="col-2">
-            <button class="btn btn-danger" id="checkout">Confirm Order</button>
+            <button class="btn btn-danger" id="confirm">Confirm Order</button>
         </div>
     </div>
 </div>
+<script>
+delivery.addEventListener("change", () => {
+    var m = delivery.method.value;
+    console.log(m);
+    if(m === "delivery"){
+        document.getElementById("address_list").style.display = "";
+    }
+    else{
+        document.getElementById("address_list").style.display = "none";
+    }
+});
+
+$.ajax({
+    type:"GET",
+    url:"/foods/get_cart",
+    complete: (res) => {
+        var cart = JSON.parse(JSON.parse(res.responseText)['cart']);
+        console.log(cart);
+        document.getElementById("confirm").addEventListener("click", () => {
+            $.ajax({
+                type:"POST",
+                url:"/foods/create_order",
+                data: {
+                    cart: JSON.stringify(cart),
+                    delivery_method: delivery.method.value,
+                    delivery_address: addr.addr.value,
+                    // delivery_address_id: addr.addr.value,
+                    payment_method: payment.method.value
+                },
+                dataType: "application/json",
+                complete: (res) => {
+                    console.log(res);
+                }
+            });
+        });
+    }
+})
+</script>
 {% endblock content %}

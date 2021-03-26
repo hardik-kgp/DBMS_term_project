@@ -4,7 +4,8 @@ from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
 import itertools
 from django.contrib.auth.decorators import login_required
-
+from users.models import Customer
+import json
 
 # Create your views here.
 @csrf_exempt
@@ -47,7 +48,13 @@ def checkout(request):
             f.combo_internals = f.find_combo_internals(f.food_id)
         cart_items.append((f, count));
         bill_tot += count * f.price
-    return render(request, 'foods/checkout.html', {'cart':cart_items, 'total_bill':bill_tot})
+    addresses = Customer.get_addresses(request.user.profile.customer_id)
+    return render(request, 'foods/checkout.html', {'cart':cart_items, 'total_bill':bill_tot, 'addresses':addresses, 'cart_str':json.dumps(cart)})
+
+@login_required(login_url="/users/customer_login")
+def get_cart(request):
+    cart = request.session['cart_items']
+    return HttpResponse(json.dumps({'status':1,'cart':json.dumps(cart)}))
 
 # @csrf_exempt
 # def addfood(request):

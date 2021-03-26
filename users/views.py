@@ -33,9 +33,13 @@ def verifycustomerlogin(request):
 		form = AuthenticationForm(data=temp)
 		if form.is_valid():
 			user = form.get_user()
-			old_cart = request.session['cart_items']
+
+			if 'cart_items' in request.session.keys():
+				old_cart = request.session['cart_items']
 			login(request,user)
-			request.session['cart_items'] = old_cart
+			if 'cart_items' in request.session.keys():
+				request.session['cart_items'] = old_cart
+
 			if 'next' in request.POST:
 				return redirect(request.POST.get('next'))
 			else:
@@ -84,9 +88,11 @@ def customer_signup(request):
 
 			profile.save()
 
-			old_cart = request.session['cart_items']
+			if 'cart_items' in request.session.keys():
+				old_cart = request.session['cart_items']
 			login(request, cur_user)
-			request.session['cart_items'] = old_cart
+			if 'cart_items' in request.session.keys():
+				request.session['cart_items'] = old_cart
 
 			print("Customer created successfully")
 
