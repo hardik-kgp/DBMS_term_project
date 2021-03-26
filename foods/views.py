@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, HttpResponse
 from .models import food_item
 from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
@@ -9,7 +9,14 @@ import itertools
 def menu(request):
     # send menu to front-end
     if request.method == 'POST': #send to checkout page from here
-        print(request.POST)
+        order_items = request.POST
+        checkout_items = {}
+        for fid,count in order_items.items():
+            if int(count):
+                checkout_items[fid] = int(count)
+        print("checkout: ", checkout_items)
+        request.session['cart_items'] = checkout_items
+        return HttpResponse('{"status":"1", "redirect_url":"/foods/checkout"}', content_type="application/json")
 
     non_combos = food_item.find_all_non_combos()
     combos = food_item.find_all_combos()
@@ -28,8 +35,16 @@ def menu(request):
     return render(request, 'foods/menu.html',{'non_combos':foods, 'combos':combos_list})
 
 def checkout(request):
-
-    return render(request, 'foods/checkout.html')
+    cart = request.session['cart_items']
+    cart_items = []
+    bill_tot = 0
+    for key,count in cart.items():
+        f = food_item.find(key)
+        if f.is_combo:
+            f.combo_internals = f.find_combo_internals(f.food_id)
+        cart_items.append((f, count));
+        bill_tot += count * f.price
+    return render(request, 'foods/checkout.html', {'cart':cart_items, 'total_bill':bill_tot})
 
 # @csrf_exempt
 # def addfood(request):

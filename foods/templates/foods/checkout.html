@@ -1,5 +1,44 @@
 {% extends "header.html" %}
 {% block content %}
-<h1>CHECKOUT</h1>
-
+<div class="">
+    <b><h1>CHECKOUT</h1></b>
+    <hr></hr>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-9 left">
+            {% for item,count in cart %}
+                <div class="row">
+                    <div class="col-1 col-md-1 col-lg-1 col-sm-1">
+                        {% if item.is_veg == True %}
+                            <img src="https://img.icons8.com/color/20/000000/vegetarian-food-symbol.png"/>
+                        {% else %}
+                            <img src="https://img.icons8.com/color/20/000000/non-vegetarian-food-symbol.png"/>
+                        {% endif %}
+                    </div>
+                    <div class="col-7 col-md-7 col-lg-7 col-sm-7">
+                        {% if item.is_combo%}
+                            <h5>&emsp; {% for item,qty in item.combo_internals %}{{qty}} {{item.name}}&ensp;{%endfor%} </h5> 
+                        {% else %}
+                            <h5>&emsp; {{item.name}} </h5> 
+                        {% endif %}
+                            <p>
+                                &emsp;&emsp;₹{{item.price}}
+                            </p>
+                    </div>
+                    <div class="col-2 col-md-2 col-lg-2 col-sm-2">
+                        {{count}}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row bg-dark text-white" id="bill" style="position:fixed;bottom:1em;right:20em;padding:1em;width:70em;">
+        <div class="col-10">
+            <h4 class="text-white">Total Bill: ₹{{total_bill}}</h4>
+        </div>
+        <div class="col-2">
+            <button class="btn btn-danger" id="checkout">Confirm Order</button>
+        </div>
+    </div>
+</div>
 {% endblock content %}

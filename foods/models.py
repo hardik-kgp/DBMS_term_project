@@ -62,6 +62,7 @@ class food_item():
     @staticmethod
     def find(food_id):
         cursor = connection.cursor()
+        print("finding food id: ", food_id)
         query = """SELECT food_id, name, type, price, is_veg, availability, is_combo
                     FROM food_item WHERE food_id='{0}'
                 """.format(
