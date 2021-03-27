@@ -203,7 +203,7 @@ def edit_details(request):
 		cus = Customer.find(request.user.profile.customer_id)
 		cus.name = request.POST['name']
 		cus.email = request.POST['email']
-		cus.phone = request.POST['phone']
+		# cus.phone = request.POST['phone']
 		cus.update()
 		messages.success(request, 'Details Updated Sucessfully')
 		return redirect('users:profile')
