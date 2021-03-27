@@ -1,0 +1,15 @@
+{% extends "header_employee.html" %}
+{% block content %}
+<b><h1>Rating</h1></b>
+
+<h2>&emsp;{{rating}}</h2>
+
+<b><h1>Feedbacks</h1></b>
+
+{%for fb in feedback %}
+    <h2>&emsp;{{fb}}</h2>
+
+{%endfor%}
+
+
+{% endblock content %}

@@ -175,6 +175,17 @@ def dashboard(request):
     return render(request, 'users/dashboard.html')
     
 
+@login_required(login_url="/users/employee_login")
+def view_ratings(request):    	
+	employee_id = request.user.profile.customer_id
+
+	rating = Employee.get_average_rating(employee_id)
+	
+	feedback = Employee.get_all_feedbacks(employee_id)
+
+	return render(request, 'users/view_ratings.html', {'rating':rating, 'feedback':feedback})
+
+
 @login_required(login_url="/users/customer_login")
 def add_balance(request):
 
