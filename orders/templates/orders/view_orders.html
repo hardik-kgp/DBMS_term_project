@@ -1,1 +1,14 @@
 <h1> Your orders </h1>>
+
+{% for order in orders%}
+    {% comment %} <label for="{{forloop.counter0}}"> {% endcomment %}
+     <h4>&emsp;Order {{forloop.counter0}}: </h4>
+     <h4> Order_id: {{order.order.order_id}} </h4>
+     <h4> Order_time: {{order.order.order_time}} </h4>
+     <h4> Order Status: {{order.order.order_status}} </h4>
+     <h4> Address: {{order.address}} </h4>
+     <h4> Order Type: {{order.order.order_type}} </h4>
+     <h4> Payment Method: {{order.order.payment_method}} </h4>
+     <h4> Total Amount: {{order.order.total_bill}} </h4>
+
+{% endfor %}

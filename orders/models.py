@@ -20,7 +20,7 @@ class Order():
 		query = """INSERT INTO orders
 					(order_time, order_status, order_type, customer_id,
 					address_id, payment_method, total_bill, rating, feedback)
-					VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')""".format(
+					VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}',{7},'{8}')""".format(
 						self.order_time,
 						self.order_status,
 						self.order_type,
@@ -108,4 +108,17 @@ class Order():
 			oid
 		)
 		cursor.execute(query)
+	
+	@staticmethod
+	def find_orders_of_customer(cid):
+		cursor = connection.cursor()
+		query = """ SELECT * FROM orders WHERE orders.customer_id = {0}""".format(cid)
+		cursor.execute(query)
+		rows = cursor.fetchall()
+		orders = []
+		for row in rows:
+			o = Order(row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9])
+			o.order_id = row[0]
+			orders.append(o)
+		return orders
 
