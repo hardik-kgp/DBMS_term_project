@@ -39,14 +39,14 @@ class food_item():
 
     def update(self):
         cursor = connection.cursor()
-        self.filter_for_db()
-        query = """UPDATE TABLE food_item SET
+        
+        query = """UPDATE food_item SET
                     name='{0}',
                     type='{1}',
                     price='{2}',
                     is_veg=b'{3}',
                     availability=b'{4}',
-                    is_combo=b'{5}',
+                    is_combo=b'{5}'
                     WHERE food_id='{6}';
                 """.format(
                     self.name,
@@ -57,6 +57,8 @@ class food_item():
                     to_int(self.is_combo),
                     self.food_id
                 )
+        
+                
         cursor.execute(query)
 
     @staticmethod

@@ -7,12 +7,14 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 import datetime
+import itertools
 from .models import Customer, Employee
 from .forms import UserRegisterForm
 from django.contrib import messages
 from .models import Profile
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from foods.models import food_item
 
 def home(request):
 	return render(request, 'resauto/home.html')
@@ -172,7 +174,23 @@ def employee_profile(request):
 
 # @login_required(login_url="/users/employee_login")
 def dashboard(request):
-    return render(request, 'users/dashboard.html')
+    print("I am here again")
+    non_combos = food_item.find_all_non_combos()
+    combos = food_item.find_all_combos()
+    # print(non_combos[-2].is_veg)
+
+    foods = sorted([(item, item.type) for item in non_combos],key=lambda x: x[1])
+    foods = {i:[j[0] for j in grp] for i,grp in itertools.groupby(foods, lambda x:x[1])}
+
+    combos_list = []
+    for combo in combos:
+        temp = {}
+        temp['head'] = combo
+        temp['children'] = food_item.find_combo_internals(combo.food_id)
+        combos_list.append(temp)
+    # print(foods['Pizza'][2].is_veg)
+    return render(request, 'users/dashboard.html',{'non_combos':foods, 'combos':combos_list})
+    
     
 
 @login_required(login_url="/users/employee_login")
@@ -246,3 +264,34 @@ def edit_details_employee(request):
 	emp = Employee.find(request.user.profile.customer_id)
 
 	return render(request, "users/edit_details_employee.html",{'employee':emp})
+
+@login_required(login_url="/users/employee_login")
+def edit_food(request):
+    
+	print(request.method)
+	# food = food_item.find(id)
+	# food.availability = request.POST['ischecked']
+	# food.update()
+	available_foods = [int(x) for x in request.POST.getlist('availability')]
+	non_combos = food_item.find_all_non_combos()
+	combos = food_item.find_all_combos()
+
+	print(available_foods)
+	for combo in combos:
+		if(combo.food_id in available_foods):
+			combo.availability = True
+		else:
+			combo.availability = False
+		combo.update()
+
+	for food in non_combos:
+		if(food.food_id in available_foods):
+			food.availability = True
+			print(food.name)
+		else:
+			food.availability = False
+		food.update()
+	
+
+	return redirect('users:dashboard')
+
