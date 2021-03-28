@@ -203,24 +203,46 @@ class Customer(models.Model):
 		)
 		cursor.execute(query)
 	
-	@staticmethod
-	def get_addresses(cid):
-		cursor = connection.cursor()
-		query = """ SELECT address FROM customer_address WHERE customer_id='{0}'""".format(cid)
-		cursor.execute(query)
-		rows = cursor.fetchall()
+	
 
-		addresses = []
-		for row in rows:
-			addresses.append(row[0])
 
-		return addresses
+
+class Address():
+	def __init__(self, customer_id, address):
+		self.address_id = -1
+		self.customer_id = customer_id
+		self.address = address
 
 	@staticmethod
 	def add_address(cid, address):
 		cursor = connection.cursor()
 		query = """INSERT INTO customer_address (customer_id, address) VALUES ('{0}','{1}');""".format(cid, address)
 		cursor.execute(query)
+
+	@staticmethod
+	def get_addresses(cid):
+		cursor = connection.cursor()
+		query = """ SELECT * FROM customer_address WHERE customer_id='{0}'""".format(cid)
+		cursor.execute(query)
+		rows = cursor.fetchall()
+
+		addresses = []
+		for row in rows:
+			add = Address(row[0],row[2])
+			add.address_id = row[1]
+			addresses.append(add)
+
+		return addresses
+	
+	@staticmethod
+	def get_address_from_id(aid):
+		cursor = connection.cursor()
+		query = """ SELECT address FROM customer_address WHERE address_id='{0}'""".format(aid)
+		cursor.execute(query)
+		rows = cursor.fetchall()
+
+		return rows[0][0]
+
 
 
 
@@ -230,4 +252,6 @@ class Profile(models.Model):
 
 	def __str__(self):
 		return self.user.username
+
+
 
