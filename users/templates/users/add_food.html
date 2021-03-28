@@ -1,0 +1,53 @@
+{% extends "header_employee.html" %}
+{% block content %}
+<div class="">
+    <b><h1>ADD FOOD ITEM</h1></b>
+    <hr></hr>
+    {% if data %}
+        <h6 align="center" class="text-danger">{{data}}<h3>
+    {% endif %}
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-5 form-signin">
+            <form action="{% url 'users:add_food' %}" method="post">
+                {% csrf_token %}
+                <div class="form-floating">
+                    <h5 for="floatingInput">Name</h5>
+                    <input class="form-control" name="name" id="floatingInput" placeholder="Enter Food name">
+                </div>
+                <br>
+                <div class="form-floating">
+                    <h5 for="floatingInput">item_type</h5>
+                    <input class="form-control" name="item_type" id="floatingInput" placeholder="Enter Item type">
+                </div>
+                <br>
+                <div class="form-floating">
+                    <h5 for="floatingInput">Price</h5>
+                    <input class="form-control" name="price" id="floatingInput" placeholder="₹ XXX">
+                </div>
+                <br>
+                <div class="form-floating">
+                    <h5 for="floatingInput">Veg </h5>
+                    <input type="radio" id = "veg" name="is_veg" value = "veg" checked>
+                </div>
+                <div class="form-floating">
+                    <h5 for="floatingInput">Non - Veg</h5>
+                    <input type="radio" id = "non_veg" name="is_veg" value = "non_veg">
+                </div>
+                <br>
+                <div class="form-floating">
+                    <h5 for="floatingInput">Available</h5>
+                    <input type = "radio" id = "available" name="availability" value = "available" checked>
+                    <h5 for="floatingInput">Not Available</h5>
+                    <input type = "radio" id = "not_available" name="availability" value = "not_available">
+                </div>
+                <br>
+                <br><br>
+                <button class="btn btn-dark btn-lg" type="submit">Create New Food</button>
+            </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+
+{% endblock content %}

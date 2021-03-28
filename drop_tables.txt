@@ -5,5 +5,4 @@ drop table if exists orders;
 drop table if exists customer_address;
 drop table if exists food_item;
 drop table if exists Employee;
-drop table if exists Resources;
 drop table if exists Customer;

@@ -21,4 +21,5 @@ urlpatterns = [
     path('dashboard', views.dashboard, name="dashboard"),
     path('view_ratings', views.view_ratings, name="view_ratings"),
     path('edit_food', views.edit_food, name = 'edit_food'),
+    path('add_food', views.add_food, name = 'add_food'),
 ]

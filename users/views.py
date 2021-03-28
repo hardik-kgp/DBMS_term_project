@@ -174,7 +174,7 @@ def employee_profile(request):
 
 # @login_required(login_url="/users/employee_login")
 def dashboard(request):
-    print("I am here again")
+    
     non_combos = food_item.find_all_non_combos()
     combos = food_item.find_all_combos()
     # print(non_combos[-2].is_veg)
@@ -183,6 +183,8 @@ def dashboard(request):
     foods = {i:[j[0] for j in grp] for i,grp in itertools.groupby(foods, lambda x:x[1])}
 
     combos_list = []
+
+	# best_employee = Employee.get_best_employee()
     for combo in combos:
         temp = {}
         temp['head'] = combo
@@ -294,4 +296,14 @@ def edit_food(request):
 	
 
 	return redirect('users:dashboard')
+
+@login_required(login_url="/users/employee_login")
+def add_food(request):
+	if(request.method == 'POST'):
+		print(request.POST)
+		food = food_item(request.POST['name'],request.POST['item_type'],int(request.POST['price']),(request.POST['is_veg'] == 'veg'),(request.POST['availability'] == 'available'),0)
+		food.insert()
+		return redirect('users:dashboard')
+	else:
+		return render(request, 'users/add_food.html')
 
