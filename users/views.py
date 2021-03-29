@@ -42,6 +42,10 @@ def verifycustomerlogin(request):
         if form.is_valid():
             user = form.get_user()
 
+            if user.profile.type == "E":
+                messages.error(request, f'Invalid Credentials')
+                return render(request, 'users/customer_login.html')
+
             if 'cart_items' in request.session.keys():
                 old_cart = request.session['cart_items']
             login(request, user)
@@ -64,6 +68,11 @@ def verifyemployeelogin(request):
         form = AuthenticationForm(data=temp)
         if form.is_valid():
             user = form.get_user()
+
+            if user.profile.type == "C":
+                messages.warning(request, f'Invalid Credentials')
+                return render(request, 'users/employee_login.html')
+
             login(request, user)
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
@@ -96,7 +105,7 @@ def customer_signup(request):
             profile = Profile()
             profile.user = cur_user
             profile.customer_id = customer.customer_id
-
+            profile.type = "C"
             profile.save()
 
             if 'cart_items' in request.session.keys():
@@ -111,7 +120,7 @@ def customer_signup(request):
             return redirect('foods:menu')
         else:
             print("Enter Valid Details")
-            messages.error(request, f'Please Enter Valid details')
+            messages.warning(request, f'Please Enter Valid details')
             return render(request, 'users/customer_signup.html')
 
     else:
@@ -141,6 +150,7 @@ def employee_signup(request):
             profile.user = cur_user
             profile.customer_id = employee.employee_id
 
+            profile.type = "E"
             profile.save()
 
             login(request, cur_user)
@@ -151,7 +161,7 @@ def employee_signup(request):
             return redirect('users:dashboard')
         else:
             print("Enter Valid Details")
-            messages.error(request, f'Please Enter Valid details')
+            messages.warning(request, f'Please Enter Valid details')
             return render(request, 'users/employee_signup.html')
     else:
         return render(request, 'users/employee_signup.html')
@@ -281,7 +291,7 @@ def edit_details_employee(request):
         return redirect('users:employeeprofile')
 
     emp = Employee.find(request.user.profile.customer_id)
-
+    
     return render(request, "users/edit_details_employee.html", {'employee': emp})
 
 

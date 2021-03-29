@@ -6,3 +6,6 @@ orders/__pycache__
 foods/__pycache__
 users/migrations/__pycache__
 .vscode/
+users/migrations/__pycache__
+foods/migrations/__pycache__
+orders/migrations/__pycache__
