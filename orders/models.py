@@ -1,6 +1,9 @@
 from django.db import connection
 from foods.models import food_item
 
+to_bool = lambda x:x==b'\x01'
+to_int = lambda x: 1 if x else 0
+
 # DATETIME MIGHT CAUSE PROBLEMS! BEWARE!!
 # Create your models here.
 class Order():
@@ -152,7 +155,7 @@ class Order():
 		cursor = connection.cursor()
 		query = """ SELECT fi.food_id, fi.name, fi.type, fi.price, fi.is_veg, fi.availability, fi.is_combo, oi.quantity
 						FROM food_item fi, order_items oi
-						WHERE fi.food_id=oi.food_id AND order_id = '{0}')""".format(eid)
+						WHERE fi.food_id=oi.food_id AND order_id = '{0}'""".format(oid)
 		cursor.execute(query)
 		rows = cursor.fetchall()
 		food_items = []
