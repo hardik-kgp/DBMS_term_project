@@ -41,7 +41,8 @@ class Order():
 			self.order_id = row[0]
 		# self.order_id =  #GET ORDER ID HERE FROM QUERY SOMEHOW
 
-	def insert_order_items(self, oid, ordered_items):
+	@staticmethod
+	def insert_order_items(oid, ordered_items):
 		cursor = connection.cursor()
 		for item, count in ordered_items.items():
 			f = food_item.find(item)
