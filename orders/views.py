@@ -43,12 +43,12 @@ def save_order(request):
 	o = Order(cur_time, 'Pending', request.POST['delivery_method'], request.user.profile.customer_id, request.POST['delivery_address'],request.POST['payment_method'], bill_tot ,'NULL', "" )
 	o.insert()
 
-	cursor = connection.cursor()
-
-	for item, count in ordered_items.items():
-		f = food_item.find(key)
-		query = """ INSERT INTO order_items values ('{0}','{1}', '{2}') """.format(o.order_id, f.food_id, count)
-		cursor.execute(query)
+	# cursor = connection.cursor()
+	# for item, count in ordered_items.items():
+	# 	f = food_item.find(key)
+	# 	query = """ INSERT INTO order_items values ('{0}','{1}', '{2}') """.format(o.order_id, f.food_id, count)
+	# 	cursor.execute(query)
+	Order.insert_order_items(o.order_id, ordered_items)
 
 	return HttpResponse('{"status":"1", "redirect_url":"/orders/view_orders"}', content_type="application/json")
 	# return redirect("foods:menu")

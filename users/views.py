@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 import datetime
 import itertools
 from .models import Customer, Employee, Address
+from orders.models import Order
 from .forms import UserRegisterForm
 from django.contrib import messages
 from .models import Profile
@@ -210,9 +211,12 @@ def view_ratings(request):
 
     rating = Employee.get_average_rating(employee_id)
 
-    feedback = Employee.get_all_feedbacks(employee_id)
+    orders = Order.find_orders_by_employee(employee_id)
+    orders_box = []
+    for order in orders:
+        orders_box.append((order, Order.find_order_items(order.order_id)))
 
-    return render(request, 'users/view_ratings.html', {'rating': rating, 'feedback': feedback})
+    return render(request, 'users/view_ratings.html', {'rating': rating if rating else 0, 'orders': orders_box})
 
 
 @login_required(login_url="/users/customer_login")
@@ -263,8 +267,8 @@ def address_book(request):
 	addresses = Address.get_addresses(request.user.profile.customer_id)
 	return render(request, "users/address_book.html", {'addresses': addresses})
 
-    addresses = Customer.get_addresses(request.user.profile.customer_id)
-    return render(request, "users/address_book.html", {'addresses': addresses})
+    # addresses = Customer.get_addresses(request.user.profile.customer_id)
+    # return render(request, "users/address_book.html", {'addresses': addresses})
 
 
 @login_required(login_url="/users/employee_login")
@@ -321,3 +325,11 @@ def add_food(request):
         return redirect('users:dashboard')
     else:
         return render(request, 'users/add_food.html')
+
+@login_required(login_url="/users/customer_login")
+def my_orders(request):
+    orders = Order.find_orders_of_customer(request.user.profile.customer_id)
+    orders_box = []
+    for order in orders:
+        orders_box.append((order, Order.find_order_items(order.order_id)))
+    return render(request, 'users/my_orders.html', {'orders': orders_box})

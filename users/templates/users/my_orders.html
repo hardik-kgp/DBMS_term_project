@@ -1,0 +1,35 @@
+{% extends "header.html" %}
+{% block content %}
+<div class="">
+    <div style="position:sticky;top:80px;">
+        <h1>MY ORDERS</h1>
+        <hr></hr>
+    </div>
+    <div class="row">
+        <div class="col-4 r-border"></div>
+        <div class="col-6">
+            {% if orders%}
+                {% for order,order_internals in orders %}
+                    <div class="card">
+                        <div class="card-body row">
+                            <div class="col-6">
+                                <h4>Order {{order.order_id}}</h4>
+                                {%for item,count in order_internals%}
+                                    &ensp;<h6>{{count}} {{item.name}}</h6>
+                                {%endfor%}
+                            </div>
+                            <div class="col-2">
+                            </div>
+                            <div class="col-4">
+                                <h5>{{order.order_status}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h4> No Orders Yet! <a href="/foods/menu">Click to add to this list</a></h4>
+            {% endif %}
+        </div>
+</div>
+
+{% endblock content %}

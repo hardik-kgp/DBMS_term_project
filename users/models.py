@@ -88,33 +88,33 @@ class Employee(models.Model):
 		)
 		cursor.execute(query)
 
-	# @staticmethod
-	# def get_average_rating(eid):
-	# 	cursor = connection.cursor()
-	# 	query = """
-	# 			select avg(rating)
-	# 			from orders
-	# 			where orders.order_id in (select order_id 
-	# 									from order_employee 
-	# 									where order_employee.employee_id = '{0}') """.format(eid)
-	# 	cursor.execute(query)
-	# 	rows = cursor.fetchall()
-	# 	return rows[0][0]
-	
 	@staticmethod
-	def get_all_feedbacks(eid):
-    		
+	def get_average_rating(eid):
 		cursor = connection.cursor()
 		query = """
-				select feedback
+				select avg(rating)
 				from orders
 				where orders.order_id in (select order_id 
 										from order_employee 
 										where order_employee.employee_id = '{0}') """.format(eid)
 		cursor.execute(query)
 		rows = cursor.fetchall()
-		rows = [row[0] for row in rows]
-		return rows		
+		return rows[0][0]
+	
+	# @staticmethod
+	# def get_all_feedbacks(eid):
+    		
+	# 	cursor = connection.cursor()
+	# 	query = """
+	# 			select feedback
+	# 			from orders
+	# 			where orders.order_id in (select order_id 
+	# 									from order_employee 
+	# 									where order_employee.employee_id = '{0}') """.format(eid)
+	# 	cursor.execute(query)
+	# 	rows = cursor.fetchall()
+	# 	rows = [row[0] for row in rows]
+	# 	return rows		
 	
 	@staticmethod
 	def get_best_employee():

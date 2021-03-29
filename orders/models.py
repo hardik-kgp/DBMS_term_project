@@ -1,4 +1,5 @@
 from django.db import connection
+from foods.models import food_item
 
 # DATETIME MIGHT CAUSE PROBLEMS! BEWARE!!
 # Create your models here.
@@ -40,6 +41,13 @@ class Order():
 			self.order_id = row[0]
 		# self.order_id =  #GET ORDER ID HERE FROM QUERY SOMEHOW
 
+	def insert_order_items(self, oid, ordered_items):
+		cursor = connection.cursor()
+		for item, count in ordered_items.items():
+			f = food_item.find(item)
+			query = """INSERT INTO order_items values ('{0}','{1}', '{2}')""".format(oid, f.food_id, count)
+			cursor.execute(query)
+
 	def update(self):
 		cursor = connection.cursor()
 		query = """UPDATE TABLE orders SET
@@ -68,7 +76,7 @@ class Order():
 		cursor.execute(query)
 
 	@staticmethod
-	def find(oid):
+	def find(self, oid):
 		cursor = connection.cursor()
 		query = """SELECT order_id, order_time, order_status, order_type, customer_id,
 					address_id, payment_method, total_bill, rating, feedback
@@ -86,7 +94,7 @@ class Order():
 		return orders[0]
 
 	@staticmethod
-	def find_all():
+	def find_all(self):
 		cursor = connection.cursor()
 		query = """SELECT order_id, order_time, order_status, order_type, customer_id,
 					address_id, payment_method, total_bill, rating, feedback
@@ -121,4 +129,35 @@ class Order():
 			o.order_id = row[0]
 			orders.append(o)
 		return orders
+
+	@staticmethod
+	def find_orders_by_employee(eid):
+		cursor = connection.cursor()
+		query = """ SELECT * FROM orders 
+					WHERE orders.order_id IN (SELECT order_id 
+												FROM order_employee oe
+												WHERE oe.employee_id = '{0}')""".format(eid)
+		cursor.execute(query)
+		rows = cursor.fetchall()
+		orders = []
+		for row in rows:
+			o = Order(row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9])
+			o.order_id = row[0]
+			orders.append(o)
+		return orders
+
+	@staticmethod
+	def find_order_items(self, oid):
+		cursor = connection.cursor()
+		query = """ SELECT fi.food_id, fi.name, fi.type, fi.price, fi.is_veg, fi.availability, fi.is_combo, oi.quantity
+						FROM food_item fi, order_items oi
+						WHERE fi.food_id=oi.food_id AND order_id = '{0}')""".format(eid)
+		cursor.execute(query)
+		rows = cursor.fetchall()
+		food_items = []
+		for row in rows:
+			o = food_item(row[1],row[2],row[3],to_bool(row[4]), to_bool(row[5]), to_bool(row[6]))
+			o.food_id = row[0]
+			food_items.append((o, row[7]))
+		return food_items
 

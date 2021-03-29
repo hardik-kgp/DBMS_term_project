@@ -1,15 +1,34 @@
 {% extends "header_employee.html" %}
 {% block content %}
-<b><h1>Rating</h1></b>
-
-<h2>&emsp;{{rating}}</h2>
-
-<b><h1>Feedbacks</h1></b>
-
-{%for fb in feedback %}
-    <h2>&emsp;{{fb}}</h2>
-
-{%endfor%}
+<div class="">
+    <b><h1>FEEDBACKS</h1></b>
+    <hr></hr>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-5 form-signin">
+            {% if orders%}
+                {% for order,order_internals in orders %}
+                    <div class="card">
+                        <div class="card-body row">
+                            <div class="col-5">
+                                <h4>Order {{order.order_id}}</h4>
+                                <h5>{%for item,count in order_internals%}{{count}} {{item.name}}&ensp;{%endfor%}</h5>
+                            </div>
+                            <div class="col-7">
+                                <p>{{order.feedback}}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h4> No Orders Yet!</h4>
+            {% endif %}
+        </div>
+        <div class="col-4">
+            <h3>Your Rating: {{rating}}</h3>
+        </div>
+    </div>
+</div>
 
 
 {% endblock content %}

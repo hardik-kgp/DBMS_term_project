@@ -22,6 +22,10 @@
                     <h5 for="floatingPassword">Password</h5>
                     <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password">
                 </div>
+                <br>
+                <div>
+                    <h6>Not a Customer? <a href='/users/employee_login'>Employee Login</a></h6>
+                </div>
                 {% if request.GET.next %}
                 <input type="hidden" name="next" value="{{request.GET.next}}">
                 {% endif %}
