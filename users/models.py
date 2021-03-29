@@ -266,7 +266,7 @@ class Address():
 	@staticmethod
 	def get_addresses(cid):
 		cursor = connection.cursor()
-		query = """ SELECT * FROM customer_address WHERE customer_id='{0}'""".format(
+		query = """ SELECT * FROM customer_address WHERE customer_id='{0}' and address != "PICK-UP" """.format(
 			cid)
 		cursor.execute(query)
 		rows = cursor.fetchall()
