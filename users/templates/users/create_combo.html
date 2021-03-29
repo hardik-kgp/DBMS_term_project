@@ -1,0 +1,81 @@
+{% extends "header_employee.html" %}
+{% block content %}
+<div class="">
+    <b><h1>ADD COMBO</h1></b>
+    <hr></hr>
+    {% if data %}
+        <h6 align="center" class="text-danger">{{data}}<h3>
+    {% endif %}
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-5 form-signin">
+            <form action="{% url 'users:add_food' %}" method="post">
+                {% csrf_token %}
+                <div class="form-floating">
+                    <h5 for="floatingInput">Name</h5>
+                    <input class="form-control" name="name" id="floatingInput" placeholder="Enter Food name">
+                </div>
+                <br>
+                <div class="form-floating">
+                    <h5 for="floatingInput">Item Type</h5>
+                    <input class="form-control" value="combos" name="item_type" id="floatingInput" placeholder="Enter Item type" disabled>
+                </div>
+                <br>
+                <div class="form-floating">
+                    <h5 for="floatingInput">Price</h5>
+                    <input type="number" class="form-control" name="price" id="floatingInput" placeholder="₹ XXX">
+                </div>
+                <br>
+                <div class="form-floating">
+                    <input type="radio" id = "veg" name="is_veg" value = "veg" checked disabled>
+                    <label for="veg"><h5 style="display:inline;">&ensp;Veg</h5></label>
+                    &emsp;&emsp;
+                    <input type="radio" id = "non_veg" name="is_veg" value = "non_veg" disabled>
+                    <label for="non_veg"><h5 style="display:inline;">&ensp;Non-Veg</h5></label>
+                </div>
+                <br>
+                <div class="form-floating">
+                    <input type = "radio" id = "available" name="availability" value = "available" checked>
+                    <label for="available"><h5 style="display:inline;">&ensp;Available</h5></label>
+                    &emsp;&emsp;
+                    <input type = "radio" id = "not_available" name="availability" value = "not_available">
+                    <label for="not_available"><h5 style="display:inline;">&ensp;Not Available</h5></label>
+                </div>
+                <br>
+                <br><br>
+                <button class="btn btn-dark btn-lg" type="submit">Create New Food</button>
+            </form>
+            {% for key,grp in food_items.items %}
+                    <h3>{{key}} </h3>
+                    {% for item in grp %}
+                        <div class="row">
+                            <div class="col-1 col-md-1 col-lg-1 col-sm-1">
+                                {% if item.is_veg == True %}
+                                    <img src="https://img.icons8.com/color/20/000000/vegetarian-food-symbol.png"/>
+                                {% else %}
+                                    <img src="https://img.icons8.com/color/20/000000/non-vegetarian-food-symbol.png"/>
+                                {% endif %}
+                            </div>
+                            <div class="col-9 col-md-9 col-lg-9 col-sm-9">
+                                <h5>&emsp; {{item.name}} </h5>
+                            </div>
+                            <div class="col-2 col-md-2 col-lg-2 col-sm-2">
+                                {% if item.availability == True %}
+                                    <div class="counter" id="{{item.food_id }}" cost="{{item.price}}">
+                                        <input type = checkbox name = 'availability' value = "{{item.food_id}}" checked>
+                                    </div>
+                                {% else %}
+                                    <div class="counter" id="{{item.food_id }}" cost="{{item.price}}">
+                                        <input type = checkbox name = 'availability' value="{{item.food_id}}">
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {%endfor%}
+                {% endfor %}
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+
+{% endblock content %}

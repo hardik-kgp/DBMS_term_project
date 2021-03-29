@@ -326,6 +326,22 @@ def add_food(request):
     else:
         return render(request, 'users/add_food.html')
 
+@login_required(login_url="/users/employee_login")
+def add_combo(request):
+    if(request.method == 'POST'):
+        print(request.POST)
+        food = food_item(request.POST['name'], request.POST['item_type'], int(
+            request.POST['price']), (request.POST['is_veg'] == 'veg'), (request.POST['availability'] == 'available'), 0)
+        food.insert()
+        return redirect('users:dashboard')
+    else:
+        non_combos = food_item.find_all_non_combos()
+        foods = sorted([(item, item.type)
+                    for item in non_combos], key=lambda x: x[1])
+        foods = {i: [j[0] for j in grp]
+                for i, grp in itertools.groupby(foods, lambda x: x[1])}
+        return render(request, 'users/create_combo.html',{'food_items':foods})
+
 @login_required(login_url="/users/customer_login")
 def my_orders(request):
     orders = Order.find_orders_of_customer(request.user.profile.customer_id)

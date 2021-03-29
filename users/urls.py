@@ -22,5 +22,6 @@ urlpatterns = [
     path('view_ratings', views.view_ratings, name="view_ratings"),
     path('edit_food', views.edit_food, name = 'edit_food'),
     path('add_food', views.add_food, name = 'add_food'),
+    # path('add_combo', views.add_combo, name = 'add_combo'),
     path('my_orders', views.my_orders, name = 'my_orders'),
 ]
