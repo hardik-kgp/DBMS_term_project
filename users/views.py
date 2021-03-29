@@ -281,7 +281,7 @@ def edit_details_employee(request):
         return redirect('users:employeeprofile')
 
     emp = Employee.find(request.user.profile.customer_id)
-
+    
     return render(request, "users/edit_details_employee.html", {'employee': emp})
 
 
