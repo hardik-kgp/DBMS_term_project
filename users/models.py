@@ -118,18 +118,30 @@ class Employee(models.Model):
 	
 	@staticmethod
 	def get_best_employee():
-    	## TODO
+    	
 		cursor = connection.cursor()
 		query = """
-
-				select avg(rating)
-				from orders
-				where orders.order_id in (select order_id 
-										from order_employee 
-										where order_employee.employee_id = '{0}') """.format(eid)
+				Select *
+				from (
+						select temp.employee_id, temp.name, avg(temp.rating) as emp_rating
+						from (select Employee.employee_id, Employee.name, orders.rating
+						from Employee, order_employee, orders
+						where Employee.employee_id = order_employee.employee_id and order_employee.order_id = orders.order_id) as temp
+						
+						group by temp.employee_id, temp.name ) as T
+				order by T.emp_rating DESC
+				LIMIT 1;					
+				"""
+				
+				
 		cursor.execute(query)
 		rows = cursor.fetchall()
     	
+		if(len(rows) == 0):
+			return ("null", 0)
+		else:
+			return (rows[0][0], rows[0][1])
+		
 		
 
 class Customer(models.Model):

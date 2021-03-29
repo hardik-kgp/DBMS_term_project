@@ -12,6 +12,12 @@
                 {% for key,grp in non_combos.items %}
                     <h4>{{key}}</h4>
                 {% endfor %}
+                <br>
+                <br>
+                <br>
+                <h4>Best Performing employee</h4>
+                <h5>Name: {{best_employee.0}}</h5>
+                <h5>Rating: {{best_employee.1}}</h5>
             </div>
         </div>
         <form action="{% url 'users:edit_food' %}" method="post">
