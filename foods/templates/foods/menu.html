@@ -13,9 +13,10 @@
                     <h4>{{key}}</h4>
                 {% endfor %}
                 <hr>
-                <h5>Best Selling Food: {{best_foods.till_now.name}}</h5>
+                {% comment %} <h5>Best Selling Food: {{best_foods.till_now.name}}</h5>
                 <h5>Best Selling Food of the day: {{best_foods.day.name}}</h5>
                 <h5>Best Selling Food of the month: {{best_foods.month.name}}</h5>
+                <h5>Best Selling Food All Time: {{best_foods.till_now.name}}</h5> {% endcomment %}
             </div>
         </div>
         <div class="col-9 left">
@@ -29,11 +30,19 @@
                             <img src="https://img.icons8.com/color/20/000000/non-vegetarian-food-symbol.png"/>
                         {% endif %}
                     </div>
-                    <div class="col-9 col-md-9 col-lg-9 col-sm-9">
+                    <div class="col-7 col-md-7 col-lg-7 col-sm-7">
                         <h5>&emsp; {% for item,qty in combo.children %}{{qty}} {{item.name}}&ensp;{%endfor%} </h5>
                             <p>
                                 &emsp;&emsp;₹{{combo.head.price}}
                             </p>
+                    </div>
+                    <div class="col-2">
+                        <small>
+                            {%if combo.head.food_id == best_foods.day.food_id%}day's🔥<br>{% endif %}
+                            {%if combo.head.food_id == best_foods.month.food_id%}month's🔥<br>{% endif %}
+                            {%if combo.head.food_id == best_foods.year.food_id%}year's🔥<br>{% endif %}
+                            {%if combo.head.food_id == best_foods.till_now.food_id%}all time🔥<br>{% endif %}
+                        </small>
                     </div>
                     <div class="col-2 col-md-2 col-lg-2 col-sm-2">
                         {% if combo.head.availability == True %}
@@ -69,11 +78,17 @@
                                 <img src="https://img.icons8.com/color/20/000000/non-vegetarian-food-symbol.png"/>
                             {% endif %}
                         </div>
-                        <div class="col-9 col-md-9 col-lg-9 col-sm-9">
+                        <div class="col-8 col-md-8 col-lg-8 col-sm-8">
                             <h5>&emsp; {{item.name}} </h5>
                                 <p>
                                     &emsp;&emsp;₹{{item.price}}
                                 </p>
+                        </div>
+                        <div class="col-1">
+                            {%if item.food_id == best_foods.day.food_id%}🔥{% endif %}
+                            {%if item.food_id == best_foods.month.food_id%}🔥{% endif %}
+                            {%if item.food_id == best_foods.year.food_id%}🔥{% endif %}
+                            {%if item.food_id == best_foods.all_time.food_id%}🔥{% endif %}
                         </div>
                         <div class="col-2 col-md-2 col-lg-2 col-sm-2">
                             {% if item.availability == True %}

@@ -62,7 +62,7 @@ class Order():
 
 	def update(self):
 		cursor = connection.cursor()
-		query = """UPDATE TABLE orders SET
+		query = """UPDATE orders SET
 					order_time='{0}',
 					order_status='{1}',
 					order_type='{2}',
@@ -72,7 +72,7 @@ class Order():
 					total_bill='{6}',
 					rating='{7}',
 					feedback='{8}'
-					WHERE order_id={9};
+					WHERE order_id='{9}';
 				""".format(
 					self.order_time,
 					self.order_status,

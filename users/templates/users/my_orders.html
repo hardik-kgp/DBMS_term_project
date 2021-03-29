@@ -6,8 +6,8 @@
         <hr></hr>
     </div>
     <div class="row">
-        <div class="col-4 r-border"></div>
-        <div class="col-6">
+        <div class="col-1 r-border"></div>
+        <div class="col-10">
             {% if orders%}
                 {% for order,order_internals in orders %}
                     <div class="card">
@@ -16,14 +16,45 @@
                                 <h4>Order {% comment %} <label for="{{forloop.counter0}}"> {% endcomment %}
                                 {{forloop.counter0}}: 
                                 </h4>
+                                <small>{{order.order_time}}</small><br>
                                 {%for item,count in order_internals%}
                                     &ensp;<h6>{{count}} {{item.name}}</h6>
                                 {%endfor%}
                             </div>
-                            <div class="col-2">
-                            </div>
-                            <div class="col-4">
-                                <h5>{{order.order_status}}</h5>
+                            {% comment %} <div class="col-2">
+                            </div> {% endcomment %}
+                            <div class="col-6">
+                                {% if order.rating %}
+                                    <h5>Your Rating:&emsp;
+                                        {%for i in 'abcde'%}
+                                            {% if forloop.counter0 <= order.rating%}
+                                                <img width="25px" src="https://miro.medium.com/max/468/1*ftSE6dqKHfpYX4wNdE1cLQ.png">
+                                            {%else%}
+                                                <img width="20px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQEAAADECAMAAACoYGR8AAAAYFBMVEX39/d/f3/8/Pz9/f12dnZ8fHx5eXnw8PD19fV0dHSbm5uKioqEhITy8vKXl5fLy8vk5OTCwsLS0tKOjo7a2trh4eHq6uq0tLSoqKjPz8/Dw8Ourq6kpKSzs7O8vLzX19cpjC6VAAAG90lEQVR4nO2d6ZryKBCFQ7G4ZFETjbbaev93OSQ9/altFogsFZLzPPNzZsLrgaIpqIqiWbNmzZo1a9asWbNm+RTAzz+TFeQZYclpO10Ga8YJIXx1o76/xI8gE+RHq/MkXQAbRn4lFr6/xosS8iBwmeA8gI14ECBsgiaAJwtM0gTPq0BtgtT3F7kWxC8AiPieWDiAr1cLyF3BxFYCiPkfAuI4KRO8W0AimNRKQN8sIAncJmQCyN8tIBEsfX+XO0HxboFJmQDuTRaQmowJaKMFJmSCVgsQ4vvTHKnNAtIEu0mYAPatFpiICSBrs4A0wSQOiw4dFiCJ769zINphAWmCTfgmOKw6AEgTBE+ArrssQAgL3gSdq8AUTNBnAWmCr7ARbPssQHgcNAF67bNA6CYouwPB/yYI+OBcxQLSBHm4Jih7V4HaBEWwBOhJxQLSBPdQEahZIGATqFogXBMsFC1QmSDIcEAvqhaQJtj7/lobWoj+kf8zQRagCei3BoEgTaBjAWmCdXBrIRy1CBB28P3FprVUDgS/JghsJdC1ACGrre9vNqtUPRKGaQK46VpArgRBmWCpbQFpgmtAJhhiAWmC0vd3G9QACwRlAtgNsYAMB+GYYND4pQlOgZhgqAUIEaGYYOD4pQnGf98aACg9D7VAZQJKYaRPseTQISrv50tGhgOQCJL15XwvIxgRiOpnX5b7zfc6FowJPigQPolz+Z9hcQ0ixQ2idvzisLldCyKHLj4degMIHmeX3X0bYZsa1dCj5SG/nQpRD93s2N9BMCJB5Ntl5B9ENdnTMt9dssT20N9ASBJJDWLhZWpUPzuU+7Oc7NzEZP8EBP8BsXQ0NaD6vyz2m+M1Zh6H/qoaxIpnl1u+TW1ODZDr3Jec7BbWOSP6nRqnW76wspOCjVzoXE72gaoWS7EuzftgWTDsY38SZwfTCJofRSAWN/xs6e8DSfwy/XZtdBYwfjFR/7Tbuwy/6FfP/aORYQJL3+PRl+GL+tB7GxabxMVwOOx6GoNSxgt70OO4EFi4jAWXMSGwcjmZjggBy638aUS/x4LAEoDxrAUWL2TS2xgQsL3Fo6IxILAKYAwILAOQCHa4EZg/GRkZAmHbATWCM14Ewr4DagRoz4uEq2qXWBFwNw6oETQUVPIuzl3WO6WNBYW8yi2AtppKHuUaQGdBGR/i3EKSqA8BplMjTtwDqBB8ckHIqPwAkAgOSBD4AoAGAU8W3u7SSAT+D9F9ApAItt6vE/gFIBGUnhFIAD7HXyMgPhH4B+AZAY8xlHeFMvGFAAcAiWDhCQEWAFKpFwS8QFTXNG2oPzwpAD4QIANQXTd0i0AUvkf8JrcIEAKQKtz9nSQy34NtljMEIsP0wuRZmRsEWB1QyQkCgblGCaztI0ANwMW9Q/xVaqzHROwAVOvPDRb2njeQ214IsBcqGlZvQ0fY63qDUiXSjwggb35l/y0K9jpFQ8ruaAp5gf/+mtQfC3crRPiyvyfEXbpQvwCbvnB3+rAfCqryLJgJ0KR/BB8TwF3DVKEy+8cSmAn0dqgwIczB4LWDrzUCd9/jbJeLUIC791d/lxIT4ie8BMBBKMBd1VyvKvNw+R5nuxxdssRbvhM+qEKnI4G20Qlo1Of/iADabqBdnQtNil+xEoichALMfU6clepA2xva2ZMDrAW9h9ek1ZVA2voMlLv1fEwAaTBo72NsWliDAbh7dpPg/MvAetL0IYYyGNhPmj4RQJk+tZ80fQhn+tTFSfk/AoZL75kRHXaxdti/hDJ9mg4aCisGPdZC2RV5QNKUs3hPt+uVPgPjVccMaEDSlMU5lb8lPWTaRWAxpk+1Q4FINr+llem90DQQxmCg1sn3MQR+jh6DAMgTLQYY06cQa43/Fr0OAWCTaLWAxEdAo3kdF9/p+wAgOmu0u0B4l0Y5acrZqeWdLEQ3ocoAX/pUNWnK2bVs383A8qjIAF8wUEuacrbedu/m6OKiFBrxpU9VkqZyA3jo383S8qrAAF8woP0/Gyvuart5uU3sZYAvfZr2LYQs/lLvLaGwTRTYPNATCgTZ6PXWoPuefgnY0qfdoUCQXaT7kwHN4y6q2LrDdyVNhbgth3xt9zYR24k5bU2aNm8A1QTQvk1Ed2LekjTl7PJRXxm5TeTNDLAFg+b7M3zVtQFUE6RH1swATfmFWk33Z/o3gGqCtHGbiCsYNFSq4yzbm/IpLU/vDJAlkP96gLPYaLRqOE1E1gQ1fZ2qcgNIDS/Vf7eJPMYVC+D0hODpBNCkXreJVjoUfKL0X3UuwfU3gGoCeGwTBb6cSZlUqQ/+fgJoUtU2kfGqdxvKu8W7QvDiZrlSHET5Ncu+jYRZ46rmvoMukwDeu5vOmjVr1qxZs2bNmhWY/gMVqmvbsidQRQAAAABJRU5ErkJggg==">
+                                            {%endif%}
+                                        {%endfor%}
+                                    </h5>
+                                    <p>Your Feedback:&emsp;{{order.feedback}}</p>
+                                {% else %}
+                                    <h5>Review Pending</h5>
+                                    <form name="review" action="{% url 'users:add_review' %}" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group row">
+                                            <div class="col-2">
+                                                <label for="example-number-input" class="col-form-label">Rating: </label>
+                                            </div>
+                                            <div class="col-3">
+                                                <input class="form-control" type="number" value="5" max="5" min="0" id="example-number-input" name="rating">
+                                            </div>
+                                            <div class="col-4"></div>
+                                        </div>
+                                        <div class="">
+                                            <textarea class="form-control mr-sm-2" rows="5" cols="20" type="add-address" placeholder="Feedback" aria-label="add-address" name="feedback"></textarea>
+                                        </div>
+                                        <input hidden value={{order.order_id}} name="order_id">
+                                        <button class="btn btn-outline-dark" style="margin-top:20px;" type="submit">Submit</button>
+                                    </form>
+                                {%endif%}
                             </div>
                         </div>
                     </div>

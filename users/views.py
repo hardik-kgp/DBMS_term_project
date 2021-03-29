@@ -359,3 +359,14 @@ def my_orders(request):
     for order in orders:
         orders_box.append((order, Order.find_order_items(order.order_id)))
     return render(request, 'users/my_orders.html', {'orders': orders_box})
+
+@login_required(login_url="/users/customer_login")
+def add_review(request):
+    order = Order.find(request.POST['order_id'])
+    if order.customer_id != request.user.profile.customer_id:
+        messages.warning(request, 'Invalid Request')
+        return my_orders(request)
+    order.rating = request.POST['rating']
+    order.feedback = request.POST['feedback']
+    order.update()
+    return my_orders(request)
