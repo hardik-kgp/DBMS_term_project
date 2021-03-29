@@ -172,6 +172,7 @@ class Customer(models.Model):
 		for row in rows:
 			self.customer_id = row[0]
 
+
 	def update(self):
 		cursor = connection.cursor()
 		query = """UPDATE Customer SET

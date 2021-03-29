@@ -18,6 +18,14 @@ class Order():
 		self.total_bill=total_bill
 		self.rating=rating
 		self.feedback=feedback
+		if order_type == "PICK-UP":
+			cursor = connection.cursor()
+			query = """INSERT INTO customer_address (customer_id, address) VALUES ('{0}','{1}');""".format(self.customer_id, "PICK-UP")
+			cursor.execute(query)
+			query = """SELECT LAST_INSERT_ID();"""
+			cursor.execute(query)
+			rows = cursor.fetchall()
+			self.address_id = rows[0][0]
 
 	def insert(self):
 		cursor = connection.cursor()

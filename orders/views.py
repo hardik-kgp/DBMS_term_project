@@ -17,7 +17,7 @@ def view_orders(request):
 		dict_cur['order'] = order
 		dict_cur['address'] = Address.get_address_from_id(order.address_id)
 		orders_with_addresses.append(dict_cur)
-	return render(request, "orders/view_orders.html", {'orders':orders_with_addresses})
+	return render(request, "users/my_orders.html", {'orders':orders_with_addresses})
 	
 @csrf_exempt
 def save_order(request):
@@ -50,5 +50,5 @@ def save_order(request):
 	# 	cursor.execute(query)
 	Order.insert_order_items(o.order_id, ordered_items)
 
-	return HttpResponse('{"status":"1", "redirect_url":"/orders/view_orders"}', content_type="application/json")
+	return HttpResponse('{"status":"1", "redirect_url":"/users/my_orders"}', content_type="application/json")
 	# return redirect("foods:menu")

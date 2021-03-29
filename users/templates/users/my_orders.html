@@ -13,7 +13,9 @@
                     <div class="card">
                         <div class="card-body row">
                             <div class="col-6">
-                                <h4>Order {{order.order_id}}</h4>
+                                <h4>Order {% comment %} <label for="{{forloop.counter0}}"> {% endcomment %}
+                                {{forloop.counter0}}: 
+                                </h4>
                                 {%for item,count in order_internals%}
                                     &ensp;<h6>{{count}} {{item.name}}</h6>
                                 {%endfor%}
