@@ -95,7 +95,7 @@ class Order():
 		return orders[0]
 
 	@staticmethod
-	def find_all(self):
+	def find_all():
 		cursor = connection.cursor()
 		query = """SELECT order_id, order_time, order_status, order_type, customer_id,
 					address_id, payment_method, total_bill, rating, feedback
