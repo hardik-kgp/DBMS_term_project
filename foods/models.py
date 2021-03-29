@@ -1,4 +1,5 @@
 from django.db import connection
+import time
 
 to_bool = lambda x:x==b'\x01'
 to_int = lambda x: 1 if x else 0
@@ -39,14 +40,14 @@ class food_item():
 
     def update(self):
         cursor = connection.cursor()
-        self.filter_for_db()
-        query = """UPDATE TABLE food_item SET
+        
+        query = """UPDATE food_item SET
                     name='{0}',
                     type='{1}',
                     price='{2}',
                     is_veg=b'{3}',
                     availability=b'{4}',
-                    is_combo=b'{5}',
+                    is_combo=b'{5}'
                     WHERE food_id='{6}';
                 """.format(
                     self.name,
@@ -57,6 +58,8 @@ class food_item():
                     to_int(self.is_combo),
                     self.food_id
                 )
+        
+                
         cursor.execute(query)
 
     @staticmethod
@@ -152,17 +155,105 @@ class food_item():
         cursor.execute(query)
         
 
-    @staticmethod
+    
     
     # TODO find the trending food names
+    @staticmethod
     def find_max_occuring_food_today():
-        pass
-    
+        cur_time = time.strftime('%Y-%m-%d')
+        # print("day time: ", cur_time)
+        cursor = connection.cursor()
+        query = """ WITH food_ct(food_id, count) as (
+                        select oi.food_id,count(*)
+                        from order_items oi, orders o
+                        where oi.order_id = o.order_id and o.order_time >= '{0}'
+                        group by oi.food_id
+                    ) 
+                    select fi.food_id, fi.name, fi.type, fi.price, fi.is_veg, fi.availability, fi.is_combo
+                    from food_ct fc, food_item fi
+                    where count = (select max(count) from food_ct) and fc.food_id=fi.food_id; """.format(cur_time)
+
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        if len(rows) == 0:
+            return None
+        else:
+            row = rows[0]
+            cur = food_item(row[1], row[2], row[3], row[4], row[5], row[6])
+            cur.food_id = row[0]
+            return cur
+        
+    @staticmethod
     def find_max_occuring_food_this_month():
-        pass
-    
+        cur_time = time.strftime('%Y-%m-01')
+        # print("month time: ",cur_time)
+        cursor = connection.cursor()
+        query = """ WITH food_ct(food_id, count) as (
+                        select oi.food_id,count(*)
+                        from order_items oi, orders o
+                        where oi.order_id = o.order_id and o.order_time >= '{0}'
+                        group by oi.food_id
+                    ) 
+                    select fi.food_id, fi.name, fi.type, fi.price, fi.is_veg, fi.availability, fi.is_combo
+                    from food_ct fc, food_item fi
+                    where count = (select max(count) from food_ct) and fc.food_id=fi.food_id; """.format(cur_time)
+
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        if len(rows) == 0:
+            return None
+        else:
+            row = rows[0]
+            cur = food_item(row[1], row[2], row[3], row[4], row[5], row[6])
+            cur.food_id = row[0]
+            return cur
+
+    @staticmethod
     def find_max_occuring_food_this_year():
-        pass
+        cur_time = time.strftime('%Y-01-01')
+        cursor = connection.cursor()
+        query = """ WITH food_ct(food_id, count) as (
+                        select oi.food_id,count(*)
+                        from order_items oi, orders o
+                        where oi.order_id = o.order_id and o.order_time >= '{0}'
+                        group by oi.food_id
+                    ) 
+                    select fi.food_id, fi.name, fi.type, fi.price, fi.is_veg, fi.availability, fi.is_combo
+                    from food_ct fc, food_item fi
+                    where count = (select max(count) from food_ct) and fc.food_id=fi.food_id; """.format(cur_time)
+
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        if len(rows) == 0:
+            return None
+        else:
+            row = rows[0]
+            cur = food_item(row[1], row[2], row[3], row[4], row[5], row[6])
+            cur.food_id = row[0]
+            return cur
+
+    @staticmethod
+    def find_max_selling_till_now():
+        cursor = connection.cursor()
+        query = """ WITH food_ct(food_id, count) as (
+                        select food_id,count(*)
+                        from order_items
+                        group by food_id
+                    ) 
+                    select fi.food_id, fi.name, fi.type, fi.price, fi.is_veg, fi.availability, fi.is_combo
+                    from food_ct fc, food_item fi
+                    where count = (select max(count) from food_ct) and fc.food_id=fi.food_id; """
+        
+        cursor.execute(query)
+
+        rows = cursor.fetchall()
+        if len(rows) == 0:
+            return None
+        else:
+            row = rows[0]
+            cur = food_item(row[1], row[2], row[3], row[4], row[5], row[6])
+            cur.food_id = row[0]
+            return cur
     
     
         

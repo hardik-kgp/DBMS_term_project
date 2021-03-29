@@ -88,6 +88,61 @@ class Employee(models.Model):
 		)
 		cursor.execute(query)
 
+	# @staticmethod
+	# def get_average_rating(eid):
+	# 	cursor = connection.cursor()
+	# 	query = """
+	# 			select avg(rating)
+	# 			from orders
+	# 			where orders.order_id in (select order_id 
+	# 									from order_employee 
+	# 									where order_employee.employee_id = '{0}') """.format(eid)
+	# 	cursor.execute(query)
+	# 	rows = cursor.fetchall()
+	# 	return rows[0][0]
+	
+	@staticmethod
+	def get_all_feedbacks(eid):
+    		
+		cursor = connection.cursor()
+		query = """
+				select feedback
+				from orders
+				where orders.order_id in (select order_id 
+										from order_employee 
+										where order_employee.employee_id = '{0}') """.format(eid)
+		cursor.execute(query)
+		rows = cursor.fetchall()
+		rows = [row[0] for row in rows]
+		return rows		
+	
+	@staticmethod
+	def get_best_employee():
+    	
+		cursor = connection.cursor()
+		query = """
+				Select *
+				from (
+						select temp.employee_id, temp.name, avg(temp.rating) as emp_rating
+						from (select Employee.employee_id, Employee.name, orders.rating
+						from Employee, order_employee, orders
+						where Employee.employee_id = order_employee.employee_id and order_employee.order_id = orders.order_id) as temp
+						
+						group by temp.employee_id, temp.name ) as T
+				order by T.emp_rating DESC
+				LIMIT 1;					
+				"""
+				
+				
+		cursor.execute(query)
+		rows = cursor.fetchall()
+    	
+		if(len(rows) == 0):
+			return ("null", 0)
+		else:
+			return (rows[0][0], rows[0][1])
+		
+		
 
 class Customer(models.Model):
 	def __init__(self, name, email, phone, res_coins, balance):
@@ -176,24 +231,46 @@ class Customer(models.Model):
 		)
 		cursor.execute(query)
 	
-	@staticmethod
-	def get_addresses(cid):
-		cursor = connection.cursor()
-		query = """ SELECT address FROM customer_address WHERE customer_id='{0}'""".format(cid)
-		cursor.execute(query)
-		rows = cursor.fetchall()
+	
 
-		addresses = []
-		for row in rows:
-			addresses.append(row[0])
 
-		return addresses
+
+class Address():
+	def __init__(self, customer_id, address):
+		self.address_id = -1
+		self.customer_id = customer_id
+		self.address = address
 
 	@staticmethod
 	def add_address(cid, address):
 		cursor = connection.cursor()
 		query = """INSERT INTO customer_address (customer_id, address) VALUES ('{0}','{1}');""".format(cid, address)
 		cursor.execute(query)
+
+	@staticmethod
+	def get_addresses(cid):
+		cursor = connection.cursor()
+		query = """ SELECT * FROM customer_address WHERE customer_id='{0}'""".format(cid)
+		cursor.execute(query)
+		rows = cursor.fetchall()
+
+		addresses = []
+		for row in rows:
+			add = Address(row[0],row[2])
+			add.address_id = row[1]
+			addresses.append(add)
+
+		return addresses
+	
+	@staticmethod
+	def get_address_from_id(aid):
+		cursor = connection.cursor()
+		query = """ SELECT address FROM customer_address WHERE address_id='{0}'""".format(aid)
+		cursor.execute(query)
+		rows = cursor.fetchall()
+
+		return rows[0][0]
+
 
 
 
@@ -203,4 +280,6 @@ class Profile(models.Model):
 
 	def __str__(self):
 		return self.user.username
+
+
 

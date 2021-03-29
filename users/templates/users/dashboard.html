@@ -1,12 +1,92 @@
 {% extends "header_employee.html" %}
 {% block content %}
 <div class="">
-    <b><h1>DASHBOARD</h1></b>
-    <hr></hr>
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-5"></div>
-        <div class="col-4"></div>
+    <div style="top:80px;">
+        <b><h1>Available Foods</h1></b>
+        <hr></hr>
     </div>
+    <div class="row">
+        <div class="col-3">
+            <div style="position:sticky;top:200px;">
+                <h4>Combos</h4>
+                {% for key,grp in non_combos.items %}
+                    <h4>{{key}}</h4>
+                {% endfor %}
+                <br>
+                <br>
+                <br>
+                <h4>Best Performing employee</h4>
+                <h5>Name: {{best_employee.0}}</h5>
+                <h5>Rating: {{best_employee.1}}</h5>
+            </div>
+        </div>
+        <form action="{% url 'users:edit_food' %}" method="post">
+        {% csrf_token %}
+        <div class="col-9 left">
+            <h3>Combos </h3>
+            {% for combo in combos %}
+                <div class="row">
+                    <div class="col-1 col-md-1 col-lg-1 col-sm-1">
+                        {% if combo.head.is_veg == True %}
+                            <img src="https://img.icons8.com/color/20/000000/vegetarian-food-symbol.png"/>
+                        {% else %}
+                            <img src="https://img.icons8.com/color/20/000000/non-vegetarian-food-symbol.png"/>
+                        {% endif %}
+                    </div>
+                    <div class="col-9 col-md-9 col-lg-9 col-sm-9">
+                        <h5>&emsp; {% for item,qty in combo.children %}{{qty}} {{item.name}}&ensp;{%endfor%} </h5>
+                    </div>
+                    <div class="col-2 col-md-2 col-lg-2 col-sm-2">
+                        {% if combo.head.availability == True %}
+                            <div class="counter" id= {{combo.head.food_id }} cost={{combo.head.price}}>
+                                <input type = checkbox name = 'availability' value = {{combo.head.food_id}} checked>
+                            </div>
+                        {% else %}
+                            
+                            <div class="counter" id= {{combo.head.food_id }} cost={{combo.head.price}}>
+                                <input type = checkbox name = 'availability' value = {{combo.head.food_id}}>
+                            </div>
+                            
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% for key,grp in non_combos.items %}
+                <h3>{{key}} </h3>
+                {% for item in grp %}
+                    <div class="row">
+                        <div class="col-1 col-md-1 col-lg-1 col-sm-1">
+                            {% if item.is_veg == True %}
+                                <img src="https://img.icons8.com/color/20/000000/vegetarian-food-symbol.png"/>
+                            {% else %}
+                                <img src="https://img.icons8.com/color/20/000000/non-vegetarian-food-symbol.png"/>
+                            {% endif %}
+                        </div>
+                        <div class="col-9 col-md-9 col-lg-9 col-sm-9">
+                            <h5>&emsp; {{item.name}} </h5>
+                                
+                        </div>
+                        <div class="col-2 col-md-2 col-lg-2 col-sm-2">
+                            {% if item.availability == True %}
+                            <div class="counter" id= {{item.food_id }} cost={{item.price}}>
+                                <input type = checkbox name = 'availability' value = {{item.food_id}} checked>
+                            </div>
+                            {% else %}
+                            <div class="counter" id= {{item.food_id }} cost={{item.price}}>
+                                <input type = checkbox name = 'availability' value = {{item.food_id}}>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {%endfor%}
+            {% endfor %}
+        </div>
+        <button class="btn btn-dark btn-lg" type="submit">Update Foods</button>
+        </form>
+    </div>
+    
 </div>
+
+
 {% endblock content %}

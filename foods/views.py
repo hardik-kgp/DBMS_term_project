@@ -4,7 +4,7 @@ from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
 import itertools
 from django.contrib.auth.decorators import login_required
-from users.models import Customer
+from users.models import Customer, Address
 import json
 
 # Create your views here.
@@ -34,8 +34,14 @@ def menu(request):
         temp['head'] = combo
         temp['children'] = food_item.find_combo_internals(combo.food_id)
         combos_list.append(temp)
-    # print(foods['Pizza'][2].is_veg)
-    return render(request, 'foods/menu.html',{'non_combos':foods, 'combos':combos_list})
+    
+    best_foods = {}
+    best_foods['till_now'] = food_item.find_max_selling_till_now()
+    best_foods['day'] = food_item.find_max_occuring_food_today()
+    best_foods['month'] = food_item.find_max_occuring_food_this_month()
+    best_foods['year'] = food_item.find_max_occuring_food_this_year()
+
+    return render(request, 'foods/menu.html',{'non_combos':foods, 'combos':combos_list, 'best_foods':best_foods})
 
 @login_required(login_url="/users/customer_login")
 def checkout(request):
@@ -48,7 +54,8 @@ def checkout(request):
             f.combo_internals = f.find_combo_internals(f.food_id)
         cart_items.append((f, count));
         bill_tot += count * f.price
-    addresses = Customer.get_addresses(request.user.profile.customer_id)
+    addresses = Address.get_addresses(request.user.profile.customer_id)
+
     return render(request, 'foods/checkout.html', {'cart':cart_items, 'total_bill':bill_tot, 'addresses':addresses, 'cart_str':json.dumps(cart)})
 
 @login_required(login_url="/users/customer_login")

@@ -15,14 +15,6 @@ def setup_database():
                     PRIMARY KEY (customer_id)
 				);"""
     
-    resources = """CREATE TABLE IF NOT EXISTS Resources(
-					resource_id INTEGER AUTO_INCREMENT,
-                    name VARCHAR(60),
-                    resource_type VARCHAR(60),
-                    quantity_present numeric(8,2),
-                    unit VARCHAR(20),
-                    PRIMARY KEY (resource_id)
-				);"""
 
     employee = """CREATE TABLE IF NOT EXISTS Employee(
 					employee_id INTEGER AUTO_INCREMENT,
@@ -98,10 +90,9 @@ def setup_database():
                     PRIMARY KEY (combo_food_id, food_id)
 				);"""
 
-    #execute all 9 create queries
+    #execute all 8 create queries
     # cursor.execute(open('drop_tables.txt').read()) #ONLY FOR DEVLOPMENT
     cursor.execute(customers)
-    cursor.execute(resources)
     cursor.execute(employee)
     cursor.execute(food_item)
     cursor.execute(customer_address)
