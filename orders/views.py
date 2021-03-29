@@ -6,6 +6,7 @@ from django.db import connection
 from .models import Order
 from foods.models import food_item
 from users.models import Address, Customer, Employee
+from django.contrib import messages
 
 # Create your views here.
 
@@ -50,6 +51,11 @@ def save_order(request):
 
     cus.res_coins += prev_bill//10
     cus.balance -= bill_tot
+
+    if cus.balance < 0:
+        messages.warning(request, "Not enough balance!")
+        return HttpResponse('{"status":"1", "redirect_url":"/foods/checkout"}', content_type="application/json")
+
     cus.update()
 
     print("delivery method: ", request.POST['delivery_method'])

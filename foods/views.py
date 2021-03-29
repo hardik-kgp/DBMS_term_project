@@ -35,13 +35,13 @@ def menu(request):
         temp['children'] = food_item.find_combo_internals(combo.food_id)
         combos_list.append(temp)
     
-    # best_foods = {}
-    # best_foods['till_now'] = food_item.find_max_selling_till_now()
-    # best_foods['day'] = food_item.find_max_occuring_food_today()
-    # best_foods['month'] = food_item.find_max_occuring_food_this_month()
-    # best_foods['year'] = food_item.find_max_occuring_food_this_year()
+    best_foods = {}
+    best_foods['till_now'] = food_item.find_max_selling_till_now()
+    best_foods['day'] = food_item.find_max_occuring_food_today()
+    best_foods['month'] = food_item.find_max_occuring_food_this_month()
+    best_foods['year'] = food_item.find_max_occuring_food_this_year()
 
-    return render(request, 'foods/menu.html',{'non_combos':foods, 'combos':combos_list})
+    return render(request, 'foods/menu.html',{'non_combos':foods, 'combos':combos_list, 'best_foods':best_foods })
 
 @login_required(login_url="/users/customer_login")
 def checkout(request):

@@ -70,7 +70,7 @@ def verifyemployeelogin(request):
             user = form.get_user()
 
             if user.profile.type == "C":
-                messages.error(request, f'Invalid Credentials')
+                messages.warning(request, f'Invalid Credentials')
                 return render(request, 'users/employee_login.html')
 
             login(request, user)
@@ -120,7 +120,7 @@ def customer_signup(request):
             return redirect('foods:menu')
         else:
             print("Enter Valid Details")
-            messages.error(request, f'Please Enter Valid details')
+            messages.warning(request, f'Please Enter Valid details')
             return render(request, 'users/customer_signup.html')
 
     else:
@@ -161,7 +161,7 @@ def employee_signup(request):
             return redirect('users:dashboard')
         else:
             print("Enter Valid Details")
-            messages.error(request, f'Please Enter Valid details')
+            messages.warning(request, f'Please Enter Valid details')
             return render(request, 'users/employee_signup.html')
     else:
         return render(request, 'users/employee_signup.html')
