@@ -42,6 +42,10 @@ def verifycustomerlogin(request):
         if form.is_valid():
             user = form.get_user()
 
+            if user.profile.type == "E":
+                messages.error(request, f'Invalid Credentials')
+                return render(request, 'users/customer_login.html')
+
             if 'cart_items' in request.session.keys():
                 old_cart = request.session['cart_items']
             login(request, user)
@@ -64,6 +68,11 @@ def verifyemployeelogin(request):
         form = AuthenticationForm(data=temp)
         if form.is_valid():
             user = form.get_user()
+
+            if user.profile.type == "C":
+                messages.error(request, f'Invalid Credentials')
+                return render(request, 'users/employee_login.html')
+
             login(request, user)
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
@@ -96,7 +105,7 @@ def customer_signup(request):
             profile = Profile()
             profile.user = cur_user
             profile.customer_id = customer.customer_id
-
+            profile.type = "C"
             profile.save()
 
             if 'cart_items' in request.session.keys():
@@ -141,6 +150,7 @@ def employee_signup(request):
             profile.user = cur_user
             profile.customer_id = employee.employee_id
 
+            profile.type = "E"
             profile.save()
 
             login(request, cur_user)
