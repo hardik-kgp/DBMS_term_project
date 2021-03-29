@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 from .models import Order
 from foods.models import food_item 
-from users.models import Address
+from users.models import Address, Customer
 
 # Create your views here.
 
@@ -35,6 +35,22 @@ def save_order(request):
 		f = food_item.find(key)
 		bill_tot += count * f.price
 
+	cus = Customer.find(request.user.profile.customer_id)
+
+	prev_bill = bill_tot
+
+	if cus.res_coins >= bill_tot:
+		cus.res_coins-=bill_tot
+		bill_tot=0
+	else:
+		bill_tot-=cus.res_coins
+		cus.res_coins=0
+
+	cus.res_coins+=prev_bill//10
+	cus.balance-=bill_tot
+	cus.update()
+
+
 	print("delivery method: ",request.POST['delivery_method'])
 	print("address : ",request.POST['delivery_address'])
 	print("payment method : ",request.POST['payment_method'])
@@ -49,6 +65,8 @@ def save_order(request):
 	# 	query = """ INSERT INTO order_items values ('{0}','{1}', '{2}') """.format(o.order_id, f.food_id, count)
 	# 	cursor.execute(query)
 	Order.insert_order_items(o.order_id, ordered_items)
+
+
 
 	return HttpResponse('{"status":"1", "redirect_url":"/users/my_orders"}', content_type="application/json")
 	# return redirect("foods:menu")
