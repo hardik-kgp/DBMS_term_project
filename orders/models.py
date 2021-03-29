@@ -76,7 +76,7 @@ class Order():
 		cursor.execute(query)
 
 	@staticmethod
-	def find(self, oid):
+	def find(oid):
 		cursor = connection.cursor()
 		query = """SELECT order_id, order_time, order_status, order_type, customer_id,
 					address_id, payment_method, total_bill, rating, feedback
@@ -147,7 +147,7 @@ class Order():
 		return orders
 
 	@staticmethod
-	def find_order_items(self, oid):
+	def find_order_items(oid):
 		cursor = connection.cursor()
 		query = """ SELECT fi.food_id, fi.name, fi.type, fi.price, fi.is_veg, fi.availability, fi.is_combo, oi.quantity
 						FROM food_item fi, order_items oi
