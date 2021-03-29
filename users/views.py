@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 import datetime
 import itertools
-from .models import Customer, Employee
+from .models import Customer, Employee, Address
 from .forms import UserRegisterForm
 from django.contrib import messages
 from .models import Profile
@@ -254,13 +254,14 @@ def edit_details(request):
 
     return render(request, "users/edit_details.html", {'customer': cus})
 
+def address_book(request):	
+	if 'address' in request.GET:
+		Address.add_address(request.user.profile.customer_id, request.GET['address'])
+		messages.success(request, 'Address Added Successfully')
+		return redirect("users:address_book")
 
-def address_book(request):
-    if 'address' in request.GET:
-        Customer.add_address(
-            request.user.profile.customer_id, request.GET['address'])
-        messages.success(request, 'Address Added Successfully')
-        return redirect("users:address_book")
+	addresses = Address.get_addresses(request.user.profile.customer_id)
+	return render(request, "users/address_book.html", {'addresses': addresses})
 
     addresses = Customer.get_addresses(request.user.profile.customer_id)
     return render(request, "users/address_book.html", {'addresses': addresses})

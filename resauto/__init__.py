@@ -90,7 +90,7 @@ def setup_database():
                     PRIMARY KEY (combo_food_id, food_id)
 				);"""
 
-    #execute all 9 create queries
+    #execute all 8 create queries
     # cursor.execute(open('drop_tables.txt').read()) #ONLY FOR DEVLOPMENT
     cursor.execute(customers)
     cursor.execute(employee)
