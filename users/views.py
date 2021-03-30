@@ -23,10 +23,22 @@ def home(request):
 
 
 def customer_login(request):
+    if request.user.is_authenticated:
+        messages.info(request, "You're already logged in")
+        if request.user.profile.type == "E":
+            return redirect('users:dashboard')
+        else:
+            return redirect('foods:menu')
     return render(request, 'users/customer_login.html')
 
 
 def employee_login(request):
+    if request.user.is_authenticated:
+        messages.info(request, "You're already logged in")
+        if request.user.profile.type == "E":
+            return redirect('users:dashboard')
+        else:
+            return redirect('foods:menu')
     return render(request, 'users/employee_login.html')
 
 
@@ -43,7 +55,7 @@ def verifycustomerlogin(request):
             user = form.get_user()
 
             if user.profile.type == "E":
-                messages.error(request, f'Invalid Credentials')
+                messages.warning(request, f'Invalid Credentials')
                 return render(request, 'users/customer_login.html')
 
             if 'cart_items' in request.session.keys():
@@ -173,6 +185,9 @@ def signup(request):
 
 @login_required(login_url="/users/customer_login")
 def profile(request):
+    if request.user.is_authenticated and request.user.profile.type == "E":
+        messages.warning(request, "You can't access customer profiles")
+        return redirect('users:employee_profile')
     customer_id = request.user.profile.customer_id
 
     print("customer id: ", customer_id)
@@ -184,7 +199,7 @@ def profile(request):
 @login_required(login_url="/users/employee_login")
 def employee_profile(request):
     if(request.user.profile.type != 'E'):
-        messages.warning(request,"you are not an employee!")
+        messages.warning(request,"You can't access employee profiles")
         return redirect('foods:menu')
     employee_id = request.user.profile.customer_id
 
@@ -198,7 +213,7 @@ def employee_profile(request):
 def dashboard(request):
 
     if(request.user.profile.type != 'E'):
-        messages.warning(request,"you are not an employee!")
+        messages.warning(request,"You're not an employee!")
         return redirect('foods:menu')
     non_combos = food_item.find_all_non_combos()
     combos = food_item.find_all_combos()
@@ -224,7 +239,7 @@ def dashboard(request):
 @login_required(login_url="/users/employee_login")
 def view_ratings(request):
     if(request.user.profile.type != 'E'):
-        messages.warning(request,"you are not an employee!")
+        messages.warning(request,"You're not an employee!")
         return redirect('foods:menu')
     employee_id = request.user.profile.customer_id
 
@@ -240,6 +255,9 @@ def view_ratings(request):
 
 @login_required(login_url="/users/customer_login")
 def add_balance(request):
+    if request.user.is_authenticated and request.user.profile.type == "E":
+        messages.warning(request, "You don't have any balance as employee")
+        return redirect('users:dashboard')
 
     if 'Amount' in request.GET:
         amount = request.GET['Amount']
@@ -264,6 +282,9 @@ def add_balance(request):
 
 @login_required(login_url="/users/customer_login")
 def edit_details(request):
+    if request.user.is_authenticated and request.user.profile.type == "E":
+        messages.warning(request, "You can't access customer profiles")
+        return redirect('users:employee_profile')
     if request.method == 'POST':
         cus = Customer.find(request.user.profile.customer_id)
         cus.name = request.POST['name']
@@ -277,14 +298,19 @@ def edit_details(request):
 
     return render(request, "users/edit_details.html", {'customer': cus})
 
-def address_book(request):	
-	if 'address' in request.GET:
-		Address.add_address(request.user.profile.customer_id, request.GET['address'])
-		messages.success(request, 'Address Added Successfully')
-		return redirect("users:address_book")
+@login_required(login_url="/users/customer_login")
+def address_book(request):
+    if request.user.is_authenticated and request.user.profile.type == "E":
+        messages.warning(request, "You don't have addresses as employees")
+        return redirect('users:dashboard')
 
-	addresses = Address.get_addresses(request.user.profile.customer_id)
-	return render(request, "users/address_book.html", {'addresses': addresses})
+    if 'address' in request.GET:
+        Address.add_address(request.user.profile.customer_id, request.GET['address'])
+        messages.success(request, 'Address Added Successfully')
+        return redirect("users:address_book")
+
+    addresses = Address.get_addresses(request.user.profile.customer_id)
+    return render(request, "users/address_book.html", {'addresses': addresses})
 
     # addresses = Customer.get_addresses(request.user.profile.customer_id)
     # return render(request, "users/address_book.html", {'addresses': addresses})
@@ -293,7 +319,7 @@ def address_book(request):
 @login_required(login_url="/users/employee_login")
 def edit_details_employee(request):
     if(request.user.profile.type != 'E'):
-        messages.warning(request,"you are not an employee!")
+        messages.warning(request,"You're not an employee!")
         return redirect('foods:menu')
     if request.method == 'POST':
         emp = Employee.find(request.user.profile.customer_id)
@@ -310,12 +336,8 @@ def edit_details_employee(request):
 @login_required(login_url="/users/employee_login")
 def edit_food(request):
 
-    # print(request.method)
-    # food = food_item.find(id)
-    # food.availability = request.POST['ischecked']
-    # food.update()
     if(request.user.profile.type != 'E'):
-        messages.warning(request,"you are not an employee!")
+        messages.warning(request,"You're not an employee!")
         return redirect('foods:menu')
     available_foods = [int(x) for x in request.POST.getlist('availability')]
     non_combos = food_item.find_all_non_combos()
@@ -343,7 +365,7 @@ def edit_food(request):
 @login_required(login_url="/users/employee_login")
 def add_food(request):
     if(request.user.profile.type != 'E'):
-        messages.warning(request,"you are not an employee!")
+        messages.warning(request,"You're not an employee!")
         return redirect('foods:menu')
     if(request.method == 'POST'):
         print(request.POST)
@@ -375,6 +397,9 @@ def add_combo(request):
 
 @login_required(login_url="/users/customer_login")
 def my_orders(request):
+    if request.user.is_authenticated and request.user.profile.type == "E":
+        messages.warning(request, "You can't order as employees")
+        return redirect('users:dashboard')
     orders = Order.find_orders_of_customer(request.user.profile.customer_id)
     orders_box = []
     for order in orders:
@@ -383,6 +408,9 @@ def my_orders(request):
 
 @login_required(login_url="/users/customer_login")
 def add_review(request):
+    if request.user.is_authenticated and request.user.profile.type == "E":
+        messages.warning(request, "You can't order as employees")
+        return redirect('users:dashboard')
     order = Order.find(request.POST['order_id'])
     if order.customer_id != request.user.profile.customer_id:
         messages.warning(request, 'Invalid Request')

@@ -176,3 +176,8 @@ a.approve-button:hover{
     background-color: rgb(241, 240, 240);
     opacity: 0.9;
 }
+
+.alert-warning{
+  background-color: #fc9999 !important;
+  color: #850404;
+}

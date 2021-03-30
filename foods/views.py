@@ -6,10 +6,16 @@ import itertools
 from django.contrib.auth.decorators import login_required
 from users.models import Customer, Address
 import json
+from django.contrib import messages
+
 
 # Create your views here.
 @csrf_exempt
 def menu(request):
+    # print(request.user)
+    if request.user.is_authenticated and request.user.profile.type == "E":
+        messages.warning(request, "You can't order with an employee profile")
+        return redirect('users:dashboard')
     # send menu to front-end
     if request.method == 'POST': #send to checkout page from here
         order_items = request.POST
@@ -45,6 +51,9 @@ def menu(request):
 
 @login_required(login_url="/users/customer_login")
 def checkout(request):
+    if request.user.is_authenticated and request.user.profile.type == "E":
+        messages.warning(request, "You can't order with an employee profile")
+        return redirect('users:dashboard')
     cart = request.session['cart_items']
     cart_items = []
     bill_tot = 0

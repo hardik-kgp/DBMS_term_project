@@ -12,6 +12,9 @@ from django.contrib import messages
 
 
 def view_orders(request):
+    if request.user.is_authenticated and request.user.profile.type == "E":
+        messages.warning(request, "You can't order as employees")
+        return redirect('users:dashboard')
     orders = Order.find_orders_of_customer(request.user.profile.customer_id)
     orders_with_addresses = []
     for order in orders:
@@ -52,11 +55,12 @@ def save_order(request):
     cus.res_coins += prev_bill//10
     cus.balance -= bill_tot
 
-    if cus.balance < 0:
+    if cus.balance < 0 and request.POST['payment_method'] == 'ONLINE':
         messages.warning(request, "Not enough balance!")
         return HttpResponse('{"status":"1", "redirect_url":"/foods/checkout"}', content_type="application/json")
 
-    cus.update()
+    if request.POST['payment_method'] == 'ONLINE':
+        cus.update()
 
     print("delivery method: ", request.POST['delivery_method'])
     print("address : ", request.POST['delivery_address'])
