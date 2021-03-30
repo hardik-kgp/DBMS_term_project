@@ -1,4 +1,4 @@
-{% extends "header.html" %}
+{% extends "header_employee.html" %}
 {% block content %}
 
 {% load static %}
@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-3"></div>
         <div class="col-5 form-signin">
-            <form action="{% url 'users:edit_details' %}" method="post">
+            <form action="{% url 'users:edit_details_employee' %}" method="post">
                 {% csrf_token %}
                 <div class="form-floating">
                     <h5 for="floatingInput">Name</h5>

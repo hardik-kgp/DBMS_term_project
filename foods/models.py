@@ -156,8 +156,6 @@ class food_item():
         
 
     
-    
-    # TODO find the trending food names
     @staticmethod
     def find_max_occuring_food_today():
         cur_time = time.strftime('%Y-%m-%d')

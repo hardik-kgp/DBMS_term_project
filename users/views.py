@@ -99,7 +99,7 @@ def customer_signup(request):
         if user_form.is_valid():
             cur_user = user_form.save()
             customer = Customer(
-                request.POST['name'], request.POST['email'], request.POST['phone'], 0, 20000)
+                request.POST['name'], request.POST['email'], request.POST['phone'], 0, 0)
             customer.insert()
 
             profile = Profile()
@@ -300,7 +300,7 @@ def edit_details_employee(request):
         emp.name = request.POST['name']
         emp.update()
         messages.success(request, 'Details Updated Sucessfully')
-        return redirect('users:employeeprofile')
+        return redirect('users:employee_profile')
 
     emp = Employee.find(request.user.profile.customer_id)
     
