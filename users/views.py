@@ -191,7 +191,7 @@ def employee_profile(request):
     return render(request, 'users/employee_profile.html', {'employee': emp})
 
 
-# @login_required(login_url="/users/employee_login")
+@login_required(login_url="/users/employee_login")
 def dashboard(request):
 
     non_combos = food_item.find_all_non_combos()
