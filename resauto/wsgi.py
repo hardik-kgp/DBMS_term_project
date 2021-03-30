@@ -119,5 +119,7 @@ def setup_database():
     cursor.execute(food_combos)
     cursor.execute(open('insert_data.txt').read()) #ONLY FOR DEVELOPMENT
 
+    print("Setup Done.....")
+
 
 setup_database()
