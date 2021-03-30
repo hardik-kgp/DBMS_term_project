@@ -33,10 +33,10 @@ class Employee(models.Model):
 
 	def update(self):
 		cursor = connection.cursor()
-		query = """UPDATE TABLE Employee SET
+		query = """UPDATE Employee SET
 					name='{0}',
 					position='{1}',
-					salary='{2}',
+					salary='{2}'
 					WHERE employee_id={3};
 				""".format(
 				self.name,
@@ -100,21 +100,6 @@ class Employee(models.Model):
 		cursor.execute(query)
 		rows = cursor.fetchall()
 		return rows[0][0]
-
-	# @staticmethod
-	# def get_all_feedbacks(eid):
-
-	# 	cursor = connection.cursor()
-	# 	query = """
-	# 			select feedback
-	# 			from orders
-	# 			where orders.order_id in (select order_id
-	# 									from order_employee
-	# 									where order_employee.employee_id = '{0}') """.format(eid)
-	# 	cursor.execute(query)
-	# 	rows = cursor.fetchall()
-	# 	rows = [row[0] for row in rows]
-	# 	return rows
 
 	@staticmethod
 	def get_best_employee():
