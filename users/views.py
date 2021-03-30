@@ -183,6 +183,9 @@ def profile(request):
 
 @login_required(login_url="/users/employee_login")
 def employee_profile(request):
+    if(request.user.profile.type != 'E'):
+        messages.warning(request,"you are not an employee!")
+        return redirect('foods:menu')
     employee_id = request.user.profile.customer_id
 
     print("employee id: ", employee_id)
@@ -194,6 +197,9 @@ def employee_profile(request):
 @login_required(login_url="/users/employee_login")
 def dashboard(request):
 
+    if(request.user.profile.type != 'E'):
+        messages.warning(request,"you are not an employee!")
+        return redirect('foods:menu')
     non_combos = food_item.find_all_non_combos()
     combos = food_item.find_all_combos()
     # print(non_combos[-2].is_veg)
@@ -217,6 +223,9 @@ def dashboard(request):
 
 @login_required(login_url="/users/employee_login")
 def view_ratings(request):
+    if(request.user.profile.type != 'E'):
+        messages.warning(request,"you are not an employee!")
+        return redirect('foods:menu')
     employee_id = request.user.profile.customer_id
 
     rating = Employee.get_average_rating(employee_id)
@@ -283,6 +292,9 @@ def address_book(request):
 
 @login_required(login_url="/users/employee_login")
 def edit_details_employee(request):
+    if(request.user.profile.type != 'E'):
+        messages.warning(request,"you are not an employee!")
+        return redirect('foods:menu')
     if request.method == 'POST':
         emp = Employee.find(request.user.profile.customer_id)
         emp.name = request.POST['name']
@@ -298,10 +310,13 @@ def edit_details_employee(request):
 @login_required(login_url="/users/employee_login")
 def edit_food(request):
 
-    print(request.method)
+    # print(request.method)
     # food = food_item.find(id)
     # food.availability = request.POST['ischecked']
     # food.update()
+    if(request.user.profile.type != 'E'):
+        messages.warning(request,"you are not an employee!")
+        return redirect('foods:menu')
     available_foods = [int(x) for x in request.POST.getlist('availability')]
     non_combos = food_item.find_all_non_combos()
     combos = food_item.find_all_combos()
@@ -327,6 +342,9 @@ def edit_food(request):
 
 @login_required(login_url="/users/employee_login")
 def add_food(request):
+    if(request.user.profile.type != 'E'):
+        messages.warning(request,"you are not an employee!")
+        return redirect('foods:menu')
     if(request.method == 'POST'):
         print(request.POST)
         food = food_item(request.POST['name'], request.POST['item_type'], int(
@@ -338,6 +356,9 @@ def add_food(request):
 
 @login_required(login_url="/users/employee_login")
 def add_combo(request):
+    if(request.user.profile.type != 'E'):
+        messages.warning(request,"you are not an employee!")
+        return redirect('foods:menu')
     if(request.method == 'POST'):
         print(request.POST)
         food = food_item(request.POST['name'], request.POST['item_type'], int(
