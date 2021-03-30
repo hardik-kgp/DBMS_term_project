@@ -38,9 +38,9 @@
                     </div>
                     <div class="col-2">
                         <small>
-                            {%if combo.head.food_id == best_foods.day.food_id%}day's🔥<br>{% endif %}
-                            {%if combo.head.food_id == best_foods.month.food_id%}month's🔥<br>{% endif %}
-                            {%if combo.head.food_id == best_foods.till_now.food_id%}all time🔥<br>{% endif %}
+                            {%if best_foods.day != None and combo.head.food_id == best_foods.day.food_id%}day's🔥<br>{% endif %}
+                            {%if best_foods.month != None and combo.head.food_id == best_foods.month.food_id%}month's🔥<br>{% endif %}
+                            {%if best_foods.till_now != None and combo.head.food_id == best_foods.till_now.food_id%}all time🔥<br>{% endif %}
                         </small>
                     </div>
                     <div class="col-2 col-md-2 col-lg-2 col-sm-2">
@@ -85,10 +85,9 @@
                         </div>
                         <div class="col-2">
                             <small>
-                                {%if combo.head.food_id == best_foods.day.food_id%}day's🔥<br>{% endif %}
-                                {%if combo.head.food_id == best_foods.month.food_id%}month's🔥<br>{% endif %}
-                                {%if combo.head.food_id == best_foods.year.food_id%}year's🔥<br>{% endif %}
-                                {%if combo.head.food_id == best_foods.till_now.food_id%}all time🔥<br>{% endif %}
+                                {%if best_foods.day != None and item.food_id == best_foods.day.food_id %}day's🔥<br>{% endif %}
+                                {%if best_foods.month != None and item.food_id == best_foods.month.food_id%}month's🔥<br>{% endif %}
+                                {%if best_foods.till_now != None and item.food_id == best_foods.till_now.food_id%}all time🔥<br>{% endif %}
                             </small>
                         </div>
                         <div class="col-2 col-md-2 col-lg-2 col-sm-2">

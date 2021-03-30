@@ -41,6 +41,7 @@ def menu(request):
     best_foods['month'] = food_item.find_max_occuring_food_this_month()
     best_foods['year'] = food_item.find_max_occuring_food_this_year()
 
+
     return render(request, 'foods/menu.html',{'non_combos':foods, 'combos':combos_list, 'best_foods':best_foods })
 
 @login_required(login_url="/users/customer_login")
